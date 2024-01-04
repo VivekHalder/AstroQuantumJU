@@ -14,15 +14,6 @@ app.use(express.urlencoded({extended: true , limit: `${limit}`}));
 
 app.use(cookieParser());
 
-app.set("/Astro_folder");
-app.set("view-engine", "html");
-app.use("/static", express.static("static"));
-app.use("/images", express.static("images"));
-
-app.get("/", (req,res)=>{
-    res.status(200).sendFile(__dirname + "/Log_In_Form.html");
-});
-
 import useRoute from './routes/user.routes.js'
 app.use("/api/v1/users", useRoute);
 
