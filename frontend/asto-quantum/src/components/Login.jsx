@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+    const navigate = useNavigate();
     const list = [
         {
             name: "Phone or Email",
@@ -15,19 +16,22 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password });
-
-            if(response && response?.data){
-                setUserData({
-                    email: "",
-                    phone: "",
-                    password: ""
-                });
-            }
+            const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password }, { withCredentials: true });
 
             if(!response){
                 console.error("There was an error logging in the user.");
             }
+
+            if(response && response?.data){
+                navigate('/');
+                setUserData({
+                    email: "",
+                    phone: "",
+                    password: "",
+                    "phone or email": ""
+                });
+            }
+
         } catch (error) {
             console.log("Error occured whiling logging the user in. Error ", error?.message);
         }
@@ -83,6 +87,7 @@ function Login() {
 
         //console.log(userData);
     };
+
 
     return (
         <>

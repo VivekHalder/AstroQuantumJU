@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -11,20 +12,20 @@ function Footer() {
             <div className='flex justify-end' >
                 <ul className='flex flex-row'>
                     <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
-                        <a href="">
+                        <Link to="/">
                             Home
-                        </a>
+                        </Link>
                     </li>
                     
                     <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
-                        <a href="">
+                        <Link to="/about">
                             About
-                        </a>
+                        </Link>
                     </li>
                     <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
-                        <a href="">
+                        <Link to="/contact">
                             Contact
-                        </a>
+                        </Link>
                     </li>
                     <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
                         <a href="">

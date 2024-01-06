@@ -1,16 +1,5 @@
-import { useEffect } from 'react';
-import { RouterProvider, useNavigate, createBrowserRouter } from 'react-router-dom';
-import { Layout, Home, Contact, About } from './components/index';
-
-function NavigationHandler(){
-  const navigate = useNavigate();
-  if(window.location.pathname === '/'){
-    useEffect(()=>{
-      navigate('/login');
-    })
-  }
-  return null;
-}
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Register, Login, Layout, Home, Contact, About } from './components/index';
 
 
 const router = createBrowserRouter([
@@ -30,7 +19,15 @@ const router = createBrowserRouter([
         path: '/about',
         element: <About/>
       }
-    ]
+    ],
+  },
+  {
+    path: '/register',
+    element: <Register/>
+  },
+  {
+    path: '/login',
+    element: <Login/>
   }
 ]);
 

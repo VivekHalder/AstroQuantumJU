@@ -90,8 +90,10 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
     }
     const options = {
         httpOnly: true,
-        secure: true
+        //secure: true
     };
+
+    if( process.env.NODE_ENV === "production" ) options.secure = true;
 
     //console.log("User logged in.");
 
@@ -146,4 +148,21 @@ const logoutUser = asyncHandler( async ( req, res, next ) => {
 
 } );
 
-export { registerUser, loginUser, logoutUser };
+const getCurrentUser = asyncHandler( async ( req, res, next ) => {
+    const user = req.user;
+    if(!user){
+        throw new ApiError( 401, "No user exists" );
+    }
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user,
+            "Current User fetched successfully."
+        )
+    )
+} );
+
+export { registerUser, loginUser, logoutUser, getCurrentUser };
