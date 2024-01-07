@@ -11,7 +11,7 @@ function Footer() {
             </span>
             <div className='flex justify-end' >
                 <ul className='flex flex-row'>
-                    <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
+                    <li  className="transition duration-150 ease-in-out hover:underline hover:scale-110 p-2">
                         <Link to="/">
                             Home
                         </Link>

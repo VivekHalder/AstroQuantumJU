@@ -1,7 +1,25 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Header() {
+  const navigate = useNavigate();
+  async function logoutUser(){
+    
+    try {
+      const logoutResponse = await axios.post( import.meta.env.VITE_APP_BACKEND_API_LOGOUT_END_POINT, null, { withCredentials: true } );
+  
+      if( logoutResponse ){
+        navigate('/login');
+        console.log("User logged-out successfully.");
+      } else{
+        console.log("Error occurred");
+      }
+    } catch (error) {
+      console.log("Error occurred. Error ", error?.message);
+    }
+  }
+
   return (
     <header className='shadow sticky z-50 top-0'>
       <nav className='bg-white border-gray-200 px-4 lg:px-6 py-3.5'>
@@ -16,8 +34,9 @@ function Header() {
             <Link
             to="#"
             className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+            onClick={logoutUser}
             >
-              Log in
+              Logout
             </Link>
             <Link
             to="#"

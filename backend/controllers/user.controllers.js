@@ -75,7 +75,7 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
 
     const isPasswordValid = await user.isPasswordCorrect( password );
 
-    console.log("Password is ", isPasswordValid);
+    //console.log("Password is ", isPasswordValid);
 
     if(!isPasswordValid){
         throw new ApiError(401, "Wrong Password");
@@ -90,10 +90,10 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
     }
     const options = {
         httpOnly: true,
-        //secure: true
+        secure: true
     };
 
-    if( process.env.NODE_ENV === "production" ) options.secure = true;
+    //if( process.env.NODE_ENV === "production" ) options.secure = true;
 
     //console.log("User logged in.");
 
@@ -119,8 +119,8 @@ const logoutUser = asyncHandler( async ( req, res, next ) => {
     User.findByIdAndUpdate(
         req.user?._id,
         {
-            $set: {
-                refreshToken: undefined,
+            $unset: {
+                refreshToken: 1,
             },
         },
         {
@@ -149,6 +149,7 @@ const logoutUser = asyncHandler( async ( req, res, next ) => {
 } );
 
 const getCurrentUser = asyncHandler( async ( req, res, next ) => {
+    //console.log("reached3");
     const user = req.user;
     if(!user){
         throw new ApiError( 401, "No user exists" );

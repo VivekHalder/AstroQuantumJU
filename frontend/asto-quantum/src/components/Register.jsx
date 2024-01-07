@@ -1,8 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+
+    const navigate = useNavigate();
+
     const list = [
         {
             name: "Name",
@@ -65,6 +69,19 @@ function Register() {
             if (response) {
                 // Check if response.data is not undefined
                 if (response.data) {
+
+
+                    try {
+                        const directLogin = await axios.post( import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, password: userData.password }, { withCredentials: true } );
+    
+                        if( directLogin ){
+                            navigate('/');
+                        }
+                    } catch (error) {
+                        console.log("Couldnot directly login the user.")
+                    }
+
+                    
                     setUserData({
                         name: '',
                         faculty: '',
