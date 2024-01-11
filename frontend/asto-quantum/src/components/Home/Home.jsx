@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DescriptionCard from '../Card/DescriptionCard';
 import FAQCard from '../Card/FAQCard';
+import { Player } from '@lottiefiles/react-lottie-player';
+import '../../assets/scene1-2024-01-09.json'
 
 function Home() {
 
@@ -78,11 +80,20 @@ function Home() {
             Jadavpur University
           </h1>
           <h2 className='text-5xl my-6'>
-            Astro-Physics Club
+            AstroPhysics Club
           </h2>
-          <p className='mt-6 leading-7'>
-            The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
-          </p>
+          <div>
+            <p className='mt-6 leading-7'>
+              The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
+            </p>
+            <Player 
+            src="../../assets/scene1-2024-01-09.json" 
+            className='player ring w-full h-300'
+            loop
+            autoplay
+            onError={(error) => console.error("Lottie Player error:", error)}
+            />
+          </div>
         </div>
         <div>
           <h1 className='h-100 w-full text-center text-6xl mt-10 mb-20'>
@@ -98,7 +109,7 @@ function Home() {
             <h1 className='text-4xl ml-6 mt-4 mb-10'>
               FAQs 
             </h1>
-            <div>
+            <div className='mb-8'>
               {
                 faq.map( ( element ) => (
                   <FAQCard key={element.question} question={element.question} answer={element.answer} />

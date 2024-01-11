@@ -7,7 +7,7 @@ import { generateAccessAndRefreshTokens } from "./controllers_utils/generateAcce
 const registerUser = asyncHandler( async ( req, res, next ) => {
     //store the details 
     const { name, faculty, year, department, phone, email, password } = req.body;
-    console.log("Name : ", name);
+    //console.log("Name : ", name);
 
     //validation
     if( [ name, faculty, year, department, phone, email, password ].some( (field) => field?.trim() === "" ) ){

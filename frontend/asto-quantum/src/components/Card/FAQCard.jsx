@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './FAQCard.css'
 
 function FAQCard( { question, answer } ) {
     const [ isOpen, setIsOpen ] = useState(false);
@@ -8,15 +9,15 @@ function FAQCard( { question, answer } ) {
     }
   return (
     <div className='ml-6 mb-3'>
-        <div>
+        <div className=''>
             <h1 className='inline font-semibold text-2xl'>
                 { question }
             </h1>
-            <span onClick={ toggleAnswer } >
-                { isOpen ? '▲' : '▼' }
+            <span className={`absolute right-4 cursor-pointer arrow-icon ${ isOpen ? 'rotate-up' : 'rotate-down' }`} onClick={ toggleAnswer } >
+                ▲
             </span>
         </div>
-        <div className='ml-7 mb-4 mt-3'>
+        <div className={`ml-7 mb-4 mt-3 answer-container ${ isOpen ? 'open' : '' }`}>
             { 
                 isOpen && <p>{ answer }</p> 
 
