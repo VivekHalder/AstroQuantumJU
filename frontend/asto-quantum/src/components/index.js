@@ -6,6 +6,6 @@ import Footer from "./Footer/Footer";
 import Contact from "./Contact/Contact";
 import About from "./About/About";
 import Layout from './Layout/Layout';
+import Profile from './Profile/Profile';
 
-
-export { Login, Register, Home, Header, Footer, Contact, About, Layout };
+export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile };

@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { addUser } from '../features/userInfo/userSlice';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const list = [
         {
@@ -17,12 +21,14 @@ function Login() {
     const handleLogin = async () => {
         try {
             const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password }, { withCredentials: true });
+            console.log(response);
 
             if(!response){
                 console.error("There was an error logging in the user.");
             }
 
             if(response && response?.data){
+                dispatch( addUser( response.data.data.user ) );
                 navigate('/');
                 setUserData({
                     email: "",
@@ -132,7 +138,7 @@ function Login() {
                         </div>
                     </div>
                     <button onClick={handleLogin} className='m-4 bg-black text-2xl text-white p-2 px-3 rounded-md'>
-                        Join
+                        Login
                     </button>
                 </div>
             </div>

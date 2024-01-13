@@ -3,8 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DescriptionCard from '../Card/DescriptionCard';
 import FAQCard from '../Card/FAQCard';
-import { Player } from '@lottiefiles/react-lottie-player';
-import '../../assets/scene1-2024-01-09.json'
 
 function Home() {
 
@@ -86,13 +84,6 @@ function Home() {
             <p className='mt-6 leading-7'>
               The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
             </p>
-            <Player 
-            src="../../assets/scene1-2024-01-09.json" 
-            className='player ring w-full h-300'
-            loop
-            autoplay
-            onError={(error) => console.error("Lottie Player error:", error)}
-            />
           </div>
         </div>
         <div>

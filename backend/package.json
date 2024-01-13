@@ -8,7 +8,7 @@
     "dev": "nodemon -r dotenv/config --experimental-json-modules ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Farshid Hossain",
+  "author": "Vivek Halder",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
