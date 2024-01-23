@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react';
+import PasswordCard from '../Card/PasswordCard';
 
 function Profile() {
-    const actualUser = useSelector( state => state.user );
-    const user = Object.assign( {}, actualUser )
+    const [ actualUser, setActualUser ] = useState( JSON.parse(localStorage.getItem('user') ) );
+    const [ user, setUser ] = useState( Object.assign( {}, actualUser ) );
     const userDetails = Object.entries( user );
+
+    const [ openModal, setOpenModal ] = useState( false );
 
     const [ editMode, setEditMode ] = useState({
       name: false,
@@ -12,20 +14,47 @@ function Profile() {
       email: false,
     });
 
+    const handleSubmit = ( prev ) => {
+      if(prev["edit"] === true){
+        for (const key in prev) {
+            if( key !== "edit" ){
+              if( user[key] !== actualUser[key] ){
+                console.log( `${actualUser[key]} !== ${user[key]}` )
+                setOpenModal( true );
+              }
+            }
+          }
+        return { name: false, phone: false, email:false, edit: false };
+      } else{
+        return { edit: !prev["edit"] };
+      }
+    }
+
+
     const handleEditClick = ( field ) => {
       setEditMode( ( prev ) => ( {
         ...prev, 
-        ...( field === "edit" ? ( prev["edit"] === true ? { name: false, phone: false, email:false, edit: false } : { [field]: !prev[field] } ) : { [field]: !prev[field] } ),
+        ...( field === "edit" ?  handleSubmit( prev ) : { [field]: !prev[field] } ),
       } ) )
     }
 
     function handleChange( event ){
-      console.log(event.target);
-      user[event.target.name] = event.target.value;
+      //console.log(event.target);
+      setUser( ( prev ) => ( { 
+        ...prev,
+        [event.target.name]: event.target.value
+      } ) )
     }
 
   return (
     <div>
+      <div>
+        {
+          openModal
+          &&
+          <PasswordCard openModal={ openModal } setOpenModal={ setOpenModal } setUser={ setUser } user={ user } actualUser={ actualUser } setActualUser={ setActualUser }/>
+        }
+      </div>
       <div className='w-full'>
         <h1 className='text-5xl text-center mt-5'>
           { user.name }'s Profile
@@ -46,7 +75,8 @@ function Profile() {
                   <input 
                   className={`bg-gray-300 text-3xl text-center w-1/2 rounded-lg mr-3 
                   ${ editMode[element[0]] ? "bg-white" : "" }`}
-                  value={ element[1] } 
+                  name={ element[0] }
+                  value={ user[element[0]] } 
                   readOnly={ !editMode[element[0]] }
                   onChange={handleChange}
                   />

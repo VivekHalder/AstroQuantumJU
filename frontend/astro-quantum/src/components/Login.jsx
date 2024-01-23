@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import validator from 'validator';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { addUser } from '../features/userInfo/userSlice';
-import { useDispatch } from 'react-redux';
 
 function Login() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const list = [
         {
@@ -28,7 +25,7 @@ function Login() {
             }
 
             if(response && response?.data){
-                dispatch( addUser( response.data.data.user ) );
+                localStorage.setItem( 'user', JSON.stringify( response.data.data.user ) );
                 navigate('/');
                 setUserData({
                     email: "",

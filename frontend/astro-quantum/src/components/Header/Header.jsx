@@ -11,8 +11,9 @@ function Header() {
       const logoutResponse = await axios.post( import.meta.env.VITE_APP_BACKEND_API_LOGOUT_END_POINT, null, { withCredentials: true } );
   
       if( logoutResponse ){
-        navigate('/login');
         console.log("User logged-out successfully.");
+        localStorage.removeItem( 'user' );
+        navigate('/login');
       } else{
         console.log("Error occurred");
       }

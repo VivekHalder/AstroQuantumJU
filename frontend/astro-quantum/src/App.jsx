@@ -22,6 +22,16 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile/>
+      },
+      {
+        path: '/github',
+        element: (
+          <>
+            <h1>
+              Github
+            </h1>
+          </>
+        )
       }
     ],
   },

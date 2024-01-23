@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { generateAccessAndRefreshTokens } from "./controllers_utils/generateAccessAndRefreshTokens.controllers.utils.js";
+import validator from 'validator';
 
 const registerUser = asyncHandler( async ( req, res, next ) => {
     //store the details 
@@ -166,4 +167,149 @@ const getCurrentUser = asyncHandler( async ( req, res, next ) => {
     )
 } );
 
-export { registerUser, loginUser, logoutUser, getCurrentUser };
+const authenticateUser = asyncHandler( async( req, res, next ) => {
+    try {
+        //console.log("Entering authenticateUser function");
+        const loggedInUser = req.user;
+        //console.log("Entering authenticateUser function...2");
+        const { password } = req.body;
+        //console.log( password );
+        
+
+        //console.log("Entering authenticateUser function...3");
+        const user = await User.findById( loggedInUser._id );
+        
+
+        //console.log("Entering authenticateUser function...4");
+        if( !user ){
+            throw new ApiError(
+                404,
+                "Couldnot find the user."
+            )
+        }
+        
+
+        //console.log("Entering authenticateUser function...5");
+        const isPasswordCorrect = await user.isPasswordCorrect( password );
+        
+        //console.log("Entering authenticateUser function...6");
+        if( !isPasswordCorrect ){
+            throw new ApiError( 
+                409,
+                "Incorrect password entered."
+            )
+        }
+    
+        //console.log("Exiting authenticateUser function");
+
+        return res
+        .status( 200 )
+        .json(
+            new ApiResponse(
+                200,
+                true,
+                "Password was correct."
+            )
+        )
+    } catch (error) {
+        console.log(`Error occured while authenticating the user. Error: ${ error.message }` );
+    }
+} );
+
+const updateDetails = asyncHandler( async( req, res, next ) => {
+    try {
+        const loggedInUser = req.user;
+    
+        const user = await User.findById( loggedInUser._id );
+    
+        const { name, email, phone, emailChange, phoneChange } = req.body;
+    
+        if( validator.isAlphanumeric( name ) ){
+            throw new ApiError( 
+                422,
+                "Name cannot contain numbers."
+            )
+        }
+    
+        if( emailChange && !validator.isEmail( email ) ){
+            throw new ApiError(
+                422,
+                "Invalid email."
+            )
+        }
+    
+        const phoneNumberRegex = /^\d{10}$/;
+    
+        if( phoneChange && !phoneNumberRegex.test( phone ) ){
+            throw new ApiError(
+                422,
+                "Invalid phone number format."
+            )
+        }
+    
+        if( emailChange ){
+            const existingUserByEmail = await User.findOne(
+                {
+                    $or: [ {email} ]
+                }
+            ) 
+        
+            if( existingUserByEmail ){
+                throw new ApiError(
+                    409,
+                    "User with the email already exists."
+                )
+            }
+        }
+
+        if( phoneChange ){
+            const existingUserByPhone = await User.findOne(
+                {
+                    $or: [ {phone} ]
+                }
+            ) 
+        
+            if( existingUserByPhone ){
+                throw new ApiError(
+                    409,
+                    "User with the phone number already exists."
+                )
+            }
+        }
+    
+        let flag = false;
+    
+        if( name !== user.name ){
+            flag = true;
+            user.name = name;
+        }
+    
+        if( email !== user.email ){
+            flag = true;
+            user.email = email;
+        }
+    
+        if( phone !== user.phone ){
+            flag = true;
+            user.phone = phone;
+        }
+        
+        if( flag ) user.save( { validateBeforeSave: false } );
+    
+        const updatedUser = await User.findById( user._id ).select( "-password -refreshToken" );
+    
+        return res.
+        status(200)
+        .json(
+            new ApiResponse(
+                200,
+                updatedUser,
+                "User details updates successfully."
+            )
+        );
+    } catch (error) {
+        console.log(`Error occured while updating the details. Error ${ error.message }`);
+    }
+} );
+
+export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails };
