@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Register, Login, Layout, Home, Contact, About, Profile } from './components/index';
+import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog } from './components/index';
 
 
 const router = createBrowserRouter([
@@ -25,13 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/github',
-        element: (
-          <>
-            <h1>
-              Github
-            </h1>
-          </>
-        )
+        element: <Blogs/>
+      },
+      {
+        path: '/create-new-blog',
+        element: <CreateNewBlog/>
       }
     ],
   },

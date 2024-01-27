@@ -7,5 +7,7 @@ import Contact from "./Contact/Contact";
 import About from "./About/About";
 import Layout from './Layout/Layout';
 import Profile from './Profile/Profile';
+import Blogs from "./Blogs/Blogs";
+import CreateNewBlog from "./Create New Blog/CreateNewBlog";
 
-export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile };
+export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog };

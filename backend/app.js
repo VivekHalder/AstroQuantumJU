@@ -17,4 +17,7 @@ app.use(cookieParser());
 import useRoute from './routes/user.routes.js'
 app.use("/api/v1/users", useRoute);
 
+import blogRoutes from './routes/blog.routes.js';
+app.use("/api/v1/blogs", blogRoutes);
+
 export { app };
