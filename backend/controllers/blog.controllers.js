@@ -2,7 +2,8 @@ import { uploadToCloudinary } from "../services/cloudinary.services.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { Blog } from './../models/blog.model.js'
+import { Blog } from './../models/blog.model.js';
+import { User } from './../models/user.model.js'; 
 
 const createPost = asyncHandler( async ( req, res, next ) => {
     try {
@@ -55,8 +56,54 @@ const createPost = asyncHandler( async ( req, res, next ) => {
         );
     } catch (error) {
         console.error(` Error occured while posting the blog. Error: ${ error.message }. `);
-        return null;
+        next(error);
     }
 } );
 
-export { createPost };
+const getAllPost = asyncHandler( async ( req, res, next ) => {
+    const result = await Blog.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "ownerInfo"
+            },
+        },
+        {
+            $unwind: "$ownerInfo"
+        },
+        {
+            $project: {
+                "title": "$title",
+                "coverImg": "$coverImg",
+                "content": "$content",
+                "owner": "$ownerInfo.name",
+                "date": { 
+                    $dateToString: {
+                        format: "%Y-%m-%d", date: "$createdAt"
+                    } 
+                }, 
+                "time": {
+                    $dateToString: {
+                        format: "%H:%M:%S", date: "$createdAt"
+                    }
+                }
+            }
+        }
+    ]);
+
+    //console.log( result );
+
+    return res.
+    status(200)
+    .json(
+        new ApiResponse(
+            200,
+            result,
+            "All the blogs."
+        )
+    )
+} );
+
+export { createPost, getAllPost };

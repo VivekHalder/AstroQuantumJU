@@ -35,22 +35,26 @@ function CreateNewBlog() {
         toolbar: toolbarOptions
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+
+        event.preventDefault();
 
         const formData = new FormData();
         formData.append( 'title', title );
         formData.append( 'coverImg', coverImg );
         formData.append( 'content', content );
 
+        console.log( `The formData is: ${formData}` );
+
         const res = await axios.post( import.meta.env.VITE_APP_BACKEND_API_CREATE_BLOG_END_POINT, formData, { withCredentials: true } );
 
-        if( !res ){
+        if( !!res ){
+            setTitle("");
+            setContent("");
+            setCoverImg("");
+        } else {
             console.log( "Couldnot post the blog." );
         }
-
-        setTitle("");
-        setContent("");
-        setCoverImg("");
     }
 
     const handleChange = (content, delta, source, editor) => {

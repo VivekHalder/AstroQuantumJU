@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Profile/>
       },
       {
-        path: '/github',
+        path: '/blogs',
         element: <Blogs/>
       },
       {

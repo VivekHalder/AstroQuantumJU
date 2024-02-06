@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import DOMPurify from 'dompurify';
 
-function BlogCard({ imgLink, title, para, author, date, time }) {
+ function BlogCard({ imgLink, title, para, author, date, time }) {
   return (
-    <div className='flex flex-row m-4'>
-        <div className='flex flex-col'>
+    <div 
+        className='flex flex-row m-4 cursor-pointer p-4' 
+        style={
+            { 
+                'height': '200px',
+                'overflowY': 'hidden'
+            }
+        }
+    >
+        <div className='flex flex-col w-3/5'>
             <h1 className='text-5xl m-1'>
                 {
                     `${ title }`
@@ -26,16 +35,18 @@ function BlogCard({ imgLink, title, para, author, date, time }) {
                     }
                 </h1>
             </div>
-            <p className='m-3'>
-                {
-                    `${ para }`
-                }
-            </p>
+            <p 
+                className='m-3' 
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(para) }}
+            />
         </div>
         <img 
         src={ imgLink } 
         alt="blog-image" 
-        className='h-1/6 w-1/6'
+        style={{
+            "height": "200px"
+        }}
+        className='m-auto'
         />
     </div>
   )
