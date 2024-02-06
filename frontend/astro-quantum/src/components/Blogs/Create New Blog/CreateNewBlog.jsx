@@ -66,7 +66,7 @@ function CreateNewBlog() {
         <form 
             name='blog form'
             encType='multipart/form-data'
-            className='ml-5 p-5'
+            className='flex flex-col w-auto ml-5 p-5'
         >
             <input 
                 type="text"
@@ -91,7 +91,14 @@ function CreateNewBlog() {
                 value={ content }
                 onChange={ handleChange }
             />
-            <button type='submit' onClick={ handleSubmit }>Submit</button>
+            <button 
+                type='submit' 
+                onClick={ handleSubmit }
+                className='p-4'
+                style={{ alignSelf: "center" }}
+            >
+                Submit
+            </button>
         </form>
     </>
   )

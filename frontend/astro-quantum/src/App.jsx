@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog } from './components/index';
+import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog } from './components/index';
 
 
 const router = createBrowserRouter([
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/create-new-blog',
         element: <CreateNewBlog/>
+      },
+      {
+        path: '/read-blog',
+        element: <PreviewBlog/>
       }
     ],
   },

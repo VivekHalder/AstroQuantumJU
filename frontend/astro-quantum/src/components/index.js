@@ -9,5 +9,6 @@ import Layout from './Layout/Layout';
 import Profile from './Profile/Profile';
 import Blogs from "./Blogs/Blogs";
 import CreateNewBlog from "./Blogs/Create New Blog/CreateNewBlog";
+import PreviewBlog from "./Blogs/PreviewBlog";
 
-export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog };
+export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog, PreviewBlog };

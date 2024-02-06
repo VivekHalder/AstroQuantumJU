@@ -1,7 +1,7 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
 
- function BlogCard({ imgLink, title, para, author, date, time }) {
+ function BlogCard({ onClick, imgLink, title, para, author, date, time }) {
   return (
     <div 
         className='flex flex-row m-4 cursor-pointer p-4' 
@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify';
                 'overflowY': 'hidden'
             }
         }
+        onClick={onClick}
     >
         <div className='flex flex-col w-3/5'>
             <h1 className='text-5xl m-1'>

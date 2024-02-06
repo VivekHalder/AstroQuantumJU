@@ -4,8 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import PreviewBlog from './PreviewBlog';
+import { useNavigate } from 'react-router-dom';
 
 function Blogs() {
+
+  const navigate = useNavigate();
+
+  const [ preview, setPreview ] = useState(false);
+  const [ selectedBlog, setSelectedBlog ] = useState({});
 
   const [ blogPresent, setBlogPresent ] = useState( false );
   const [ blogs, setBlogs ] = useState( [] );
@@ -26,25 +33,41 @@ function Blogs() {
     fetchData();
   }, [] );
 
+  const handlePreview = (blog) => {
+    setSelectedBlog(blog);
+    setPreview(true);
+    navigate(
+      `/read-blog`,
+      {
+        state: blog
+      }
+    )
+  }
+
   return (
     <div className='flex flex-col'>
       <>
       {
-        blogPresent ? (
-          <>
-        {
-          blogs.map((blog, index) => (
-            <BlogCard
-              key={index} 
-              imgLink={blog.coverImg} 
-              title={blog.title}
-              para={blog.content}
-              author={blog.owner}
-              date={blog.date}
-              time={blog.time}
-            /> ))}
-              </>
-            ) : (
+        blogPresent ? ( 
+          preview ? <PreviewBlog blogDetails={selectedBlog}/> :
+            <>
+            {
+              blogs.map((blog, index) => (
+                <BlogCard
+                  onClick={() => handlePreview(blog)}
+                  key={index} 
+                  imgLink={blog.coverImg} 
+                  title={blog.title}
+                  para={blog.content}
+                  author={blog.owner}
+                  date={blog.date}
+                  time={blog.time}
+                />
+                )
+              )
+            }
+            </>
+        ) : (
               <div className='w-full h-screen flex'>
                 <p className='mx-auto my-auto text-9xl'>
                   No posts found...
@@ -53,16 +76,20 @@ function Blogs() {
           )
         }
       </>
-      <div className='flex justify-end sticky w-full bottom-2'>
-        <Link
-          to='/create-new-blog'
+      { !preview && 
+        <div 
+          className='flex justify-end sticky w-full bottom-2'
         >
-          <FontAwesomeIcon 
-            icon={ faSquarePlus } 
-            className='p-2 w-11 h-11 cursor-pointer'
-          />
-        </Link>
-      </div>
+          <Link
+            to='/create-new-blog'
+          >
+            <FontAwesomeIcon 
+              icon={ faSquarePlus } 
+              className='p-2 w-11 h-11 cursor-pointer'
+            />
+          </Link>
+        </div>
+      }
     </div>
   )
 }
