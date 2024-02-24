@@ -1,5 +1,4 @@
 {
-    "vercel": 2,
     "name": "astro_and_quantum",
     "builds": [{ "src": "server.js", "use": "@vercel/node" }],
     "routes": [{ "src": "/(.*)", "dest": "./backend/app.js" }]
