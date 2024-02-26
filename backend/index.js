@@ -16,6 +16,10 @@ connectDB()
     app.listen( process.env.PORT || 8000, () => {
         console.log(`Server is running on the port ${process.env.PORT || 8000}`);
     } );
+
+    app.get('/', function(req, res){
+        res.send('Welcome to the server of AstroQuantum JU');
+    })
 } )
 .catch( ( error ) => {
     console.log(`Error occured after connecting the database. Error `, error?.message );
