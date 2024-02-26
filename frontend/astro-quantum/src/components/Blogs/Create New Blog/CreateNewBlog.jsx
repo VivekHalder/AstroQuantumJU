@@ -8,6 +8,7 @@ function CreateNewBlog() {
     const [ content, setContent ] = useState( <></> );
     const [ coverImg, setCoverImg ] = useState( "" );
     const [ title, setTitle ] = useState( "" );
+    const [ isSubmiting, setIsSubmitting ] = useState(false);
 
     const quillRef = useRef( null );
 
@@ -38,6 +39,7 @@ function CreateNewBlog() {
     const handleSubmit = async (event) => {
 
         event.preventDefault();
+        setIsSubmitting(true);
 
         const formData = new FormData();
         formData.append( 'title', title );
@@ -46,14 +48,20 @@ function CreateNewBlog() {
 
         console.log( `The formData is: ${formData}` );
 
-        const res = await axios.post( import.meta.env.VITE_APP_BACKEND_API_CREATE_BLOG_END_POINT, formData, { withCredentials: true } );
+        try{
+            const res = await axios.post( import.meta.env.VITE_APP_BACKEND_API_CREATE_BLOG_END_POINT, formData, { withCredentials: true } );
 
-        if( !!res ){
-            setTitle("");
-            setContent("");
-            setCoverImg("");
-        } else {
-            console.log( "Couldnot post the blog." );
+            if( !!res ){
+                setTitle("");
+                setContent("");
+                setCoverImg("");
+            } else {
+                console.log( "Couldnot post the blog." );
+            }
+        } catch( error ){
+            console.log(`Error occured while posting the blog. Error: ${error.message}`);
+        } finally{
+            setIsSubmitting(false);
         }
     }
 
@@ -94,10 +102,11 @@ function CreateNewBlog() {
             <button 
                 type='submit' 
                 onClick={ handleSubmit }
-                className='p-4 text-white bg-color-orange'
+                className={`p-4 text-white bg-orange-500 ${isSubmiting ? 'opacity-50 cursor-not-allowed' : ''}`}
                 style={{ alignSelf: "center" }}
+                disabled={isSubmiting}
             >
-                Submit
+                { isSubmiting ? 'Submitting' : 'Submit' }
             </button>
         </form>
     </>

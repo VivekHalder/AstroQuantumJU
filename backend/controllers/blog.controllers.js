@@ -7,6 +7,8 @@ import { User } from './../models/user.model.js';
 
 const createPost = asyncHandler( async ( req, res, next ) => {
     try {
+
+        console.log("clicked...")
         const { title, images, content } = req.body;
 
         // console.log( title );
