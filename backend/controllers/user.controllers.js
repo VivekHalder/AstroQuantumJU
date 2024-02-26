@@ -156,6 +156,8 @@ const getCurrentUser = asyncHandler( async ( req, res, next ) => {
         throw new ApiError( 401, "No user exists" );
     }
 
+    console.log(user);
+
     return res
     .status(200)
     .json(
