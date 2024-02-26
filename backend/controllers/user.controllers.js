@@ -96,7 +96,7 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
 
     //if( process.env.NODE_ENV === "production" ) options.secure = true;
 
-    //console.log("User logged in.");
+    console.log("User logged in.");
 
     return res
     .status(200)
