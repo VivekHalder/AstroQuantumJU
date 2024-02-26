@@ -90,7 +90,7 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
         throw new ApiError(500, "Couldnot login the user.");
     }
     const options = {
-        httpOnly: true,
+        //httpOnly: true,
         secure: true
     };
 
