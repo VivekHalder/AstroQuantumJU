@@ -91,7 +91,8 @@ const loginUser = asyncHandler( async ( req, res, next ) => {
     }
     const options = {
         httpOnly: true,
-        sameSite: 'Lax',
+        sameSite: 'lax',
+        domain: 'https://astro-and-modern-physics.vercel.app',
         secure: true
     };
 
