@@ -5,10 +5,10 @@ import { User } from "../models/user.model.js";
 
 export const verifyJWT = asyncHandler( async ( req, res, next ) => {
     try {
-        console.log("THIS IS REQUEST COOKIES", req.cookies);
+        // console.log("THIS IS REQUEST COOKIES", req.cookies);
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
         
-        console.log(token);
+        // console.log(token);
         
 
         if(!token){

@@ -3,6 +3,7 @@ import multer from 'multer';
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       try{
+        console.log("dest")
         cb(null, './images');
       } catch(error){
         console.log(`Error occured in destination of multer. Error: ${error.message}.`)
@@ -11,6 +12,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       try{
+        console.log("filename")
         cb(null, file.originalname + file.fieldname + '-' + uniqueSuffix);
       } catch(error){
         console.log('Error occured in file name of the multer. Error: ${error.message}.')
