@@ -19,7 +19,11 @@ connectDB()
 
     app.get('/', function(req, res){
         res.send('Welcome to the server of AstroQuantum JU');
-    })
+    });
+
+    app.get('/favicon.ico', (req, res) => {
+        res.status(204).end();
+    });
 } )
 .catch( ( error ) => {
     console.log(`Error occured after connecting the database. Error `, error?.message );
