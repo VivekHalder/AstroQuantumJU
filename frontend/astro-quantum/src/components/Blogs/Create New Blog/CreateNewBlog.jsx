@@ -94,7 +94,7 @@ function CreateNewBlog() {
             <button 
                 type='submit' 
                 onClick={ handleSubmit }
-                className='p-4'
+                className='p-4 text-white bg-color-orange'
                 style={{ alignSelf: "center" }}
             >
                 Submit
