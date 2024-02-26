@@ -55,7 +55,7 @@ function Home() {
       //console.log(res.status);
       if(res){
         //console.log(res);
-        navigate('/');
+        //navigate('/');
       } else{
         navigate('/login');
       }
