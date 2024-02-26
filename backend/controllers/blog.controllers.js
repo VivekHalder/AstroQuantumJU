@@ -15,6 +15,7 @@ const createPost = asyncHandler( async ( req, res, next ) => {
         // console.log( content );
         // console.log( coverImg );
 
+        
         //console.log("before post", req.file.path);
 
         const coverImgLocalPath = req.file.path;
