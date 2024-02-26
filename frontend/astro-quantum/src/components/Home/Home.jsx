@@ -51,7 +51,7 @@ function Home() {
   const navigate = useNavigate();
   const checkLogin = async () => { 
     try {
-      const res = await axios.post( import.meta.env.VITE_APP_BACKEND_API_GET_CURRENT_USER_END_POINT, { withCredentials: true } );
+      const res = await axios.get( import.meta.env.VITE_APP_BACKEND_API_GET_CURRENT_USER_END_POINT, { withCredentials: true } );
       //console.log(res.status);
       if(res){
         //console.log(res);
