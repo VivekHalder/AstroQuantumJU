@@ -173,6 +173,22 @@ function Login() {
                             isLoggingIn ? "Logging In..." : "Login"
                         }
                     </button>
+                    <div 
+                        className='mt-10 ml-7 flex flex-row' 
+                        style={{ width: "400px", height: "38px" }}
+                    >
+                        <h1 className='font-bold text-white mx-auto mr-0'>
+                            New User?&ensp;
+                        </h1>
+                        <h1 className='font-bold mx-auto ml-0' style={{ color: "#CA4308" }}>
+                            <Link
+                                to="/register"
+                                className='hover:scale-110 hover:underline'
+                            >
+                                Sign Up
+                            </Link>
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
