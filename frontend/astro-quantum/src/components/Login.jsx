@@ -4,10 +4,11 @@ import gifBackground from "../assets/black-hole-icegif-1.gif";
 import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
+import { useNavigate } from 'react-router-dom'; 
 
 function Login() {
 
-    const navigate = React.useNavigate();
+    const navigate = useNavigate();
 
     const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
