@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../assets/Asto-sci logo-horizontal.svg";
+import logo from "../assets/Asto-sci logo-horizontal-W.svg";
 import gifBackground from "../assets/black-hole-icegif-1.gif";
 import "./styles/auth.css";
 import axios from 'axios';
