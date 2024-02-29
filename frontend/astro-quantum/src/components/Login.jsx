@@ -4,7 +4,7 @@ import gifBackground from "../assets/black-hole-icegif-1.gif";
 import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 
 function Login() {
 
@@ -42,7 +42,7 @@ function Login() {
         right: "30px",
         top: "100px",
         width: "500px",
-        height: "400px",
+        height: "450px",
         backdropFilter: "blur(1px)",
         backgroundColor: "rgba(255, 255, 255, 0.1)"
     } 
