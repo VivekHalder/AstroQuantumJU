@@ -228,11 +228,11 @@ const updateDetails = asyncHandler( async( req, res, next ) => {
     
         const { name, email, phone, emailChange, phoneChange } = req.body;
     
-        if( validator.isAlphanumeric( name ) ){
+        if( !validator.isAlpha( name ) ){
             console.log(name);
             throw new ApiError( 
                 422,
-                "Name cannot contain numbers."
+                "Name should only contain characters between A-Z and a-z."
             )
         }
     
