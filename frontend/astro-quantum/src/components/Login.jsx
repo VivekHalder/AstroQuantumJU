@@ -2,8 +2,14 @@ import React from 'react'
 import logo from "../assets/Asto-sci logo-horizontal.svg";
 import gifBackground from "../assets/black-hole-icegif-1.gif";
 import "./styles/auth.css";
+import axios from 'axios';
+import validator from 'validator';
 
 function Login() {
+
+    const navigate = React.useNavigate();
+
+    const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
     const imgContainerStyle = {
         position: "relative",
@@ -42,7 +48,13 @@ function Login() {
 
     const handleLogin = async () => {
         try {
+
+            setIsLoggingIn(true);
+
             const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password }, { withCredentials: true });
+
+            setIsLoggingIn(false);
+
             console.log(response);
 
             if(!response){
@@ -153,9 +165,12 @@ function Login() {
                     <button
                         className='inline mt-10 ml-7 text-xl text-white rounded-lg'
                         style={{width: "400px", height: "38px", backgroundColor: "#CA4308"}}
-                        onChange={handleLogin}
+                        onClick={handleLogin}
+                        disabled={isLoggingIn}
                     >
-                        Login
+                        {
+                            isLoggingIn ? "Logging In..." : "Login"
+                        }
                     </button>
                 </div>
             </div>
