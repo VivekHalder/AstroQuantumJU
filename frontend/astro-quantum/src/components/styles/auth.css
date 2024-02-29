@@ -1,0 +1,8 @@
+::placeholder{
+    color: "white";
+    opacity: 10;
+}
+
+::-ms-input-placeholder {
+    color: "white";
+  }

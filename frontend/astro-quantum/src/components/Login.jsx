@@ -1,19 +1,44 @@
-import React from 'react';
-import validator from 'validator';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react'
+import logo from "../assets/Asto-sci logo-horizontal.svg";
+import gifBackground from "../assets/black-hole-icegif-1.gif";
+import "./styles/auth.css";
 
 function Login() {
 
-    const navigate = useNavigate();
-    const list = [
-        {
-            name: "Phone or Email",
-        },
-        {
-            name: "Password",
-        }
-    ];
+    const imgContainerStyle = {
+        position: "relative",
+        width: "100%",
+        height: "100px"
+    }
+
+    const logoStyle = {
+        width: "200px",
+        height: "90px",
+        position: "absolute",
+        top: "1px",
+        bottom: "5px",
+        left: "20px"
+    }
+
+    const bodyStyle = {
+        margin: "0px",
+        padding: "0px",
+        width: "100%",
+        height: "100vh",
+        backgroundImage: `url(${gifBackground})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat"
+    }
+
+    const overlayStyle = {
+        position: "absolute",
+        right: "30px",
+        top: "100px",
+        width: "500px",
+        height: "400px",
+        backdropFilter: "blur(1px)",
+        backgroundColor: "rgba(255, 255, 255, 0.1)"
+    } 
 
     const handleLogin = async () => {
         try {
@@ -91,56 +116,52 @@ function Login() {
         //console.log(userData);
     };
 
+  return (
+    <div style={bodyStyle}>
+        <div style={imgContainerStyle}>
+            <img 
+                src={logo} 
+                alt="Logo" 
+                style={logoStyle}
+            />
+        </div>
+        <div>
+            <div style={overlayStyle}>
+                <h1 style={{fontFamily: "Rubik, sans-serif", color: "#E6E6E6"}} className='text-6xl pl-7 pt-5'>
+                    Welcome Back!
+                </h1>
+                <h2 style={{fontFamily: "Rubik, sans-serif", color: "#E6E6E6"}} className='text-3xl pl-7 pt-5 text-white'>
+                    Glad to see you back!
+                </h2>
 
-    return (
-        <>
-            <div className='flex justify-center items-center h-full'>
-                <div className='w-3/4 flex flex-col justify-center items-center m-4 bg-green-200'>
-                    <h1 className='text-5xl text-gray-600 mt-20 m-5'>
-                        Join Astro-Quantum Club JU
-                    </h1>
-                    <div className='w-3/4 p-5 flex flex-col bg-blue-200 m-5 items-center rounded-md'>
-                        {list.map((element, index) => (
-                            <div key={index} className='w-full flex flex-col items-begin'>
-                                <label
-                                    key={index}
-                                    className='block text-gray-600 text-sm font-semibold mt-4 mb-1 w-3/4 mx-auto'
-                                    htmlFor={element.name.toLowerCase()}>
-                                    {element.name}
-                                </label>
-                                <input
-                                    type="text"
-                                    id={element.name.toLowerCase()}
-                                    name={element.name.toLowerCase()}
-                                    value={userData[element.name.toLowerCase()]}
-                                    placeholder={element.dummy}
-                                    onChange={handleInputChange} // Handle input changes
-                                    className='border rounded-md px-3 py-2 w-3/4 mx-auto'
-                                    autoComplete='on'
-                                />
-                            </div>
-                        ))}
-                    </div>
-                    <div className='flex flex-row w-3/4 mx-auto'>
-                        <div className='w-2/3 flex justify-begin'>
-                            <h1 className='font-semibold'>
-                                New to Astro-Quantum JU?
-                            </h1>
-                        </div>
-
-                        <div className='w-1/3 flex justify-end'>
-                            <Link to="/register" className='hover:scale-110 hover:underline'>
-                                Join
-                            </Link>
-                        </div>
-                    </div>
-                    <button onClick={handleLogin} className='m-4 bg-black text-2xl text-white p-2 px-3 rounded-md'>
+                <div className='mt-10 flex flex-col'>
+                    <input 
+                        type="text"
+                        name="phone or email"
+                        placeholder='Phone number or email' 
+                        className={`w-4/5 ml-7 h-10 rounded-lg bg-transparent border-white border focus:outline-none px-4 py-4 text-xl text-white placeholder-white`}
+                        onChange={handleInputChange}
+                    />
+                    <input 
+                        type="password"
+                        name="password"
+                        placeholder="Password" 
+                        className={`w-4/5 ml-7 mt-7 h-10 rounded-lg bg-transparent border-white border focus:outline-none px-4 py-4 text-xl text-{#E6E6E6} placeholder-white`}
+                        onChange={handleInputChange}
+                    />
+                    
+                    <button
+                        className='inline mt-10 ml-7 text-xl text-white rounded-lg'
+                        style={{width: "400px", height: "38px", backgroundColor: "#CA4308"}}
+                        onChange={handleLogin}
+                    >
                         Login
                     </button>
                 </div>
             </div>
-        </>
-    );
+        </div>
+    </div>
+  )
 }
 
-export default Login
+export default Login;
