@@ -54,8 +54,6 @@ function Login() {
 
             const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password }, { withCredentials: true });
 
-            setIsLoggingIn(false);
-
             console.log(response);
 
             if(!response){
@@ -75,6 +73,8 @@ function Login() {
 
         } catch (error) {
             console.log("Error occured whiling logging the user in. Error ", error?.message);
+        } finally {
+            setIsLoggingIn(false);
         }
     };
 
