@@ -132,9 +132,7 @@ const logoutUser = asyncHandler( async ( req, res, next ) => {
 
     const options = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        domain: "https://astro-and-modern-physics.vercel.app/"
+        secure: true
     }
 
 
