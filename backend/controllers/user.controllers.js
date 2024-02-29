@@ -234,7 +234,7 @@ const updateDetails = asyncHandler( async( req, res, next ) => {
             console.log(name);
             throw new ApiError( 
                 422,
-                "Name should only contain characters between A-Z and a-z."
+                "Name should only contain characters between A-Z and a-z. And spaces between names." 
             )
         }
     
