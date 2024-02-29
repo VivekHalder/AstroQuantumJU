@@ -228,7 +228,9 @@ const updateDetails = asyncHandler( async( req, res, next ) => {
     
         const { name, email, phone, emailChange, phoneChange } = req.body;
     
-        if( !validator.isAlpha( name ) ){
+        const nameRegex = /^([A-Za-z]+(?:\s[A-Za-z]+)*)$/;
+
+        if( !nameRegex.test(name) ){
             console.log(name);
             throw new ApiError( 
                 422,
