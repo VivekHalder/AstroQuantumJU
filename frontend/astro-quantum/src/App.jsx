@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog } from './components/index';
+import { UserProvider } from './contexts/UserContext';
 
 
 const router = createBrowserRouter([
@@ -51,7 +52,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router}/>
+      <UserProvider>
+        <RouterProvider router={router}/>
+      </UserProvider>
     </>
   )
 }

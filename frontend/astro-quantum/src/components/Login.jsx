@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from "../assets/Asto-sci logo-horizontal-W.svg";
-import gifBackground from "../assets/black-hole-icegif-1.gif";
+import gifBackground from "../assets/login-page-pgif.gif";
 import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
