@@ -17,21 +17,22 @@ export const UserProvider = ({children}) => {
 
     const [actualUserData, setActualUserData] = useState({});
 
-    const [ isUserPresent, setIsUserPresent ] = useState(false);
+    const [ isUserPresent, setIsUserPresent ] = useState(null);
 
     useEffect(() => {
         console.log("Changed");
-        if(!actualUserData || Object.keys(actualUserData).length === 0){
+        if(isUserPresent === null){
+
+        } else if(!actualUserData || Object.keys(actualUserData).length === 0){
+            console.log("no there");
             setIsUserPresent(false);
             return ;
+        } else{
+            console.log("done");
+            localStorage.setItem('user', JSON.stringify(actualUserData));
+            setIsUserPresent(true);
         }
-        localStorage.setItem('user', JSON.stringify(actualUserData));
-        setIsUserPresent(true);
-
-        return () => {
-            localStorage.removeItem('user');
-        }
-    }, [actualUserData]);
+    }, [actualUserData, isUserPresent]);
 
     const getActualUser = () => {
         return actualUserData;

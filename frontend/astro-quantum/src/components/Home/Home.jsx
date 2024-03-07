@@ -60,7 +60,9 @@ function Home() {
         console.log(res.data.data);
         setActualUserData(res.data.data);
         setIsUserPresent(true);
+        navigate('/');
       } else{
+        console.log("COOKIE NO FOUND.")
         setIsUserPresent(false);
         navigate('/login');
       }
@@ -77,7 +79,7 @@ function Home() {
       navigate('/login');
     }
 
-  }, [] );
+  }, [isUserPresent] );
 
   
   return (
