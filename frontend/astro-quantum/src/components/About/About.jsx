@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import GoogleMap from '../Card/GoogleMap'
+import aurobindo from '../../assets/aurobindo-bhavan.jfif'
+import ju from '../../assets/ju-logo.png'
 
 function About() {
 
@@ -20,21 +22,73 @@ function About() {
     }
   ];
 
+  const container = {
+    width: "450px",
+    height: "500px",
+  }
+
+  const biggerCircle = {
+    width: "450px",
+    height: "450px",
+    backgroundImage: `url(${aurobindo})`,
+    backgroundPosition: "center",
+    borderRadius: "50%"
+  }
+
+  const smallerCircle = {
+    width: "250px",
+    height: "250px",
+    backgroundImage: `url(${ju})`,
+    backgroundPosition: "center",
+    borderRadius: "50%",
+    position: "absolute",
+    bottom: "-20px",
+    backgroundColor: "white",
+    backgroundRepeat: "no-repeat",
+  }
+
   return (
-    <>
+    <div className='w-full bg-black'>
+      <div className='w-full flex flex-row'>
+        <div className="w-full mx-20 py-20 flex justify-center items-center h-full">
+          <div className='w-1/2 ml-10'>
+            <h1 className='text-7xl text-white mb-1'>
+              The <span className='bg-orange-700 font-bold px-1 py-0'>First</span>
+            </h1>
+            <h1 className='text-white text-7xl mb-2'>
+              Astro Physics
+            </h1>
+            <h1 className='text-white text-7xl mb-3'>
+              Club of 
+            </h1>
+            <h1 className='text-7xl font-bold text-white bg-orange-700 inline pt-0 py-0 mb-2 py-0 pl-3 pr-1'>
+              Jadavpur 
+            </h1>
+            <h1 className='text-white text-7xl'>
+              University
+            </h1>
+          </div>
+          <div className='w-1/2'>
+            <div style={container} className='mx-auto'>
+              <div style={biggerCircle} className='mt-2 ml-6'></div>
+              <div style={smallerCircle}></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='w-full flex flex-row'>
+        <div className='w-1/2 text-center'>
+          <h1 className='w-full mt-3 text-white text-4xl'>
+            About Us
+          </h1>
+        </div>
+        <div className='w-1/2'>
+          <p className='text-white text-center mt-0 mx-6 mb-6'>
+          The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
+          </p>
+        </div>
+      </div>
       <div>
-        <h1 className='text-4xl font-semibold text-center mt-7 mb-8' >
-          About
-        </h1>
-        <p className='leading-7 text-center mx-6 mb-6'>
-          The First Astrophysics Club of Jadavpur University, Kolkata, India, stands as a pioneering community for students passionate about delving into the intricacies of the cosmos. Our club cultivates a dynamic atmosphere through engaging discussions, captivating stargazing events, and collaborative projects. Members actively explore the wonders of astrophysics, enriching their astronomical comprehension and scientific curiosity.
-
-          Welcoming students from all backgrounds, our club provides an inclusive space for both novices and seasoned astrophysics enthusiasts. Through a peer-to-peer learning environment, we encourage collaboration, allowing members to share diverse perspectives and foster a collective passion for the universe.
-
-          Our club hosts a variety of events, including thematic discussions on astrophysical topics, mesmerizing stargazing sessions, and hands-on collaborative projects. The goal is to not only deepen our members' understanding of astrophysics but also provide practical avenues for applying this knowledge to real-world scenarios.
-
-          By participating in our club, students have the opportunity to immerse themselves in the cosmic realm and connect with valuable resources within the astrophysics community. The First Astrophysics Club at Jadavpur University is more than just a club; it's a cosmic journey of exploration and discovery, bringing together like-minded individuals who share a profound curiosity about the mysteries of the universe.
-        </p>
         <div className='flex flex-row mt-10 h-screen'>
           {
             campus.map( (element, index) => (
@@ -50,8 +104,8 @@ function About() {
           }
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
-export default About
+export default About;
