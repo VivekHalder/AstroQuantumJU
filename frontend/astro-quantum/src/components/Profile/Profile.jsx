@@ -3,7 +3,7 @@ import PasswordCard from '../Card/PasswordCard';
 import { useUserContext } from '../../contexts/UserContext';
 
 function Profile() {
-    const { actualUserData ,setActualUserData, getActualUser } = useUserContext();
+    const { actualUserData ,setActualUserData } = useUserContext();
 
     const [ user, setUser ] = useState({});
 

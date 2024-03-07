@@ -3,8 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DescriptionCard from '../Card/DescriptionCard';
 import FAQCard from '../Card/FAQCard';
+import { useUserContext } from '../../contexts/UserContext';
 
 function Home() {
+
+  const { setActualUserData, isUserPresent, setIsUserPresent } = useUserContext();
 
   const desc = [
     {
@@ -53,10 +56,12 @@ function Home() {
     try {
       const res = await axios.get( import.meta.env.VITE_APP_BACKEND_API_GET_CURRENT_USER_END_POINT, { withCredentials: true } );
       //console.log(res.status);
-      if(res){
-        //console.log(res);
-        navigate('/');
+      if(res.status === 200){
+        console.log(res.data.data);
+        setActualUserData(res.data.data);
+        setIsUserPresent(true);
       } else{
+        setIsUserPresent(false);
         navigate('/login');
       }
     } catch (error) {
@@ -67,6 +72,11 @@ function Home() {
 
   useEffect( () => {
     checkLogin();
+
+    if(isUserPresent === false){
+      navigate('/login');
+    }
+
   }, [] );
 
   

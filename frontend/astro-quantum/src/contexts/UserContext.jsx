@@ -17,11 +17,20 @@ export const UserProvider = ({children}) => {
 
     const [actualUserData, setActualUserData] = useState({});
 
+    const [ isUserPresent, setIsUserPresent ] = useState(false);
+
     useEffect(() => {
         console.log("Changed");
-        if(Object.keys(actualUserData).length === 0) return ;
+        if(!actualUserData || Object.keys(actualUserData).length === 0){
+            setIsUserPresent(false);
+            return ;
+        }
         localStorage.setItem('user', JSON.stringify(actualUserData));
-        console.log(actualUserData);
+        setIsUserPresent(true);
+
+        return () => {
+            localStorage.removeItem('user');
+        }
     }, [actualUserData]);
 
     const getActualUser = () => {
@@ -29,7 +38,7 @@ export const UserProvider = ({children}) => {
     }    
 
     return (
-        <UserContext.Provider value={{userData, setUserData, actualUserData, setActualUserData, getActualUser}}>
+        <UserContext.Provider value={{userData, setUserData, actualUserData, setActualUserData, getActualUser, isUserPresent, setIsUserPresent}}>
             {children}
         </UserContext.Provider>
     );
