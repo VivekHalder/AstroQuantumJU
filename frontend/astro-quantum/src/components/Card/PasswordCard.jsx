@@ -83,7 +83,7 @@ function PasswordCard({ openModal, setOpenModal, setUser, user, actualUser, setA
                 actualUser = Object.assign( {}, user );
                 localStorage.setItem( 'user', JSON.stringify( actualUser ) );
                 setActualUser( JSON.parse( localStorage.getItem( 'user' ) ) );
-                setUser( ...actualUser )
+                setUser( {...actualUser} )
               }
 
             } catch (error) {

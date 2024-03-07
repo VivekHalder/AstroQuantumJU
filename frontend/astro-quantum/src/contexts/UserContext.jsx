@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
 
@@ -15,8 +15,21 @@ export const UserProvider = ({children}) => {
         password: ""
     });
 
+    const [actualUserData, setActualUserData] = useState({});
+
+    useEffect(() => {
+        console.log("Changed");
+        if(Object.keys(actualUserData).length === 0) return ;
+        localStorage.setItem('user', JSON.stringify(actualUserData));
+        console.log(actualUserData);
+    }, [actualUserData]);
+
+    const getActualUser = () => {
+        return actualUserData;
+    }    
+
     return (
-        <UserContext.Provider value={{userData, setUserData}}>
+        <UserContext.Provider value={{userData, setUserData, actualUserData, setActualUserData, getActualUser}}>
             {children}
         </UserContext.Provider>
     );

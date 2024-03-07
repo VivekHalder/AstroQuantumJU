@@ -3,13 +3,12 @@ import logo from "../assets/Asto-sci logo-horizontal-W.svg";
 import gifBackground from "../assets/register-gif.webp";
 import "./styles/auth.css";
 import axios from 'axios';
-import validator from 'validator';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useUserContext } from '../contexts/UserContext';
 
 function Register() {
 
-    const { userData, setUserData } = useUserContext();
+    const { userData, setUserData, setActualUserData } = useUserContext();
 
     const navigate = useNavigate();
 
@@ -116,7 +115,10 @@ function Register() {
 
                     try {
                         const directLogin = await axios.post( import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, password: userData.password }, { withCredentials: true } );
-    
+                        
+                        console.log(response.data.data.user);
+
+                        setActualUserData(Object.assign({}, response.data.data.user));
                         if( directLogin ){
                             navigate('/');
                         }

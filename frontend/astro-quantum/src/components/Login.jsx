@@ -5,10 +5,13 @@ import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
 import { useNavigate, Link } from 'react-router-dom'; 
+import { useUserContext } from '../contexts/UserContext';
 
 function Login() {
 
     const navigate = useNavigate();
+
+    const { setActualUserData } = useUserContext();
 
     const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
@@ -61,7 +64,7 @@ function Login() {
             }
 
             if(response && response?.data){
-                localStorage.setItem( 'user', JSON.stringify( response.data.data.user ) );
+                setActualUserData(Object.assign({}, response.data.data.user));
                 navigate('/');
                 setUserData({
                     email: "",

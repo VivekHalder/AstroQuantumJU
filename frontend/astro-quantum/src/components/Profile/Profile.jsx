@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PasswordCard from '../Card/PasswordCard';
+import { useUserContext } from '../../contexts/UserContext';
 
 function Profile() {
-    const [ actualUser, setActualUser ] = useState( JSON.parse(localStorage.getItem('user') ) );
-    const [ user, setUser ] = useState( Object.assign( {}, actualUser ) );
+    const { actualUserData ,setActualUserData, getActualUser } = useUserContext();
+
+    const [ user, setUser ] = useState({});
+
+    useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      setUser(JSON.parse(storedUser));
+      setActualUserData(JSON.parse(storedUser))
+    }, []);
+
     const userDetails = Object.entries( user );
 
     const [ openModal, setOpenModal ] = useState( false );
@@ -18,8 +27,8 @@ function Profile() {
       if(prev["edit"] === true){
         for (const key in prev) {
             if( key !== "edit" ){
-              if( user[key] !== actualUser[key] ){
-                console.log( `${actualUser[key]} !== ${user[key]}` )
+              if( user[key] !== actualUserData[key] ){
+                console.log( `${actualUserData[key]} !== ${user[key]}` )
                 setOpenModal( true );
               }
             }
@@ -52,7 +61,7 @@ function Profile() {
         {
           openModal
           &&
-          <PasswordCard openModal={ openModal } setOpenModal={ setOpenModal } setUser={ setUser } user={ user } actualUser={ actualUser } setActualUser={ setActualUser }/>
+          <PasswordCard openModal={ openModal } setOpenModal={ setOpenModal } setUser={ setUser } user={ user } actualUser={ actualUserData } setActualUser={ setActualUserData }/>
         }
       </div>
       <div className='w-full'>
@@ -105,4 +114,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default Profile;
