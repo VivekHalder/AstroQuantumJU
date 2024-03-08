@@ -11,17 +11,6 @@ function About() {
     isMapLoaded(true);
   }
 
-  const campus = [
-    {
-      title: "Jadavpur University, Jadavpur Campus",
-      link: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.14113989448!2d88.36883737435089!3d22.498887135669857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0271237f28abe9%3A0xd047bab0c8bfb11c!2sJadavpur%20University!5e0!3m2!1sen!2sin!4v1704782218697!5m2!1sen!2sin"
-    },
-    {
-      title: "Jadavpur University, Salt Lake Campus",
-      link: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.48978804809!2d88.41075967435283!3d22.56077763340536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02743203255595%3A0x9c37b30c00660fab!2sJadavpur%20University%2C%20Salt%20Lake%20Campus!5e0!3m2!1sen!2sin!4v1704782364930!5m2!1sen!2sin"
-    }
-  ];
-
   const container = {
     width: "450px",
     height: "500px",
@@ -88,20 +77,44 @@ function About() {
           </p>
         </div>
       </div>
-      <div>
-        <div className='flex flex-row mt-10 h-screen'>
-          {
-            campus.map( (element, index) => (
-              <div className="flex flex-col mx-auto">
-                <h1 key={index} className='text-3xl text-center'>
-                  { element.title }
-                </h1>
-                { !mapLoaded && 
-                <div className='mb-10 mt-5 h-3/4 w-4/5 mx-auto bg-gray-500 animate-pulse'></div> }
-                <GoogleMap key={index} link={element.link} onLoadHandle={handleLoad}/>
-              </div>
-            ) )
-          }
+      <div className='w-full flex flex-col'>
+        <div className='w-4/5 flex flex-row mx-auto'>
+          <div style={{height: "490px"}} className='w-1/2'>
+            <GoogleMap link={`${"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.14113989448!2d88.36883737435089!3d22.498887135669857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0271237f28abe9%3A0xd047bab0c8bfb11c!2sJadavpur%20University!5e0!3m2!1sen!2sin!4v1704782218697!5m2!1sen!2sin"}`} onLoadHandle={handleLoad}/>
+          </div>
+          <div className='mt-20 ml-20'>
+            <h1 className='text-white font-bold text-5xl mb-2'>
+              Jadavpur
+            </h1>
+            <h1 className='text-white font-bold text-5xl mb-2'>
+              University,
+            </h1>
+            <h1 className='text-white font-bold text-5xl bg-orange-700 mb-2'>
+              Jadavpur
+            </h1>
+            <h1 className='text-white font-bold text-5xl mb-2'>
+              Campus
+            </h1>
+          </div>
+        </div>
+        <div className='w-4/5 flex flex-row mx-auto'>
+            <div className='w-1/2 mt-20 text-right'>
+              <h1 className='text-white font-bold text-5xl mb-2'>
+                Jadavpur
+              </h1>
+              <span className='text-white font-bold text-5xl mb-2 bg-orange-700'>
+                University,
+              </span>
+              <h1 className='text-white font-bold text-5xl mb-2'>
+                Salt Lake
+              </h1>
+              <h1 className='text-white font-bold text-5xl mb-2'>
+                Campus
+              </h1>
+            </div>
+            <div style={{height: "490px", width: "633px"}} className='ml-20 '>
+              <GoogleMap link={`${"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.48978804809!2d88.41075967435283!3d22.56077763340536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02743203255595%3A0x9c37b30c00660fab!2sJadavpur%20University%2C%20Salt%20Lake%20Campus!5e0!3m2!1sen!2sin!4v1704782364930!5m2!1sen!2sin"}`} onLoadHandle={handleLoad}/>
+            </div>
         </div>
       </div>
     </div>

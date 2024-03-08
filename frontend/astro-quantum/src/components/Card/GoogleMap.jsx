@@ -8,7 +8,7 @@ function GoogleMap({ link, onLoadHandle }) {
 
   return (
     <iframe 
-    className='mb-10 mt-5 h-3/4 w-4/5 mx-auto' 
+    className='mb-10 mt-5 h-3/4 w-4/5 mx-auto rounded-xl' 
     src={link}
     loading="lazy"
     onLoad={handleIframeLoad}
