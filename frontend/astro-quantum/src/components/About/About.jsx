@@ -65,18 +65,20 @@ function About() {
           </div>
         </div>
       </div>
-      <div className='w-full flex flex-row'>
-        <div className='w-1/2 text-center'>
-          <h1 className='w-full mt-3 text-white text-4xl'>
+      <hr className='w-4/5 mx-auto' />
+      <div className='w-full flex flex-row mt-5'>
+        <div className='w-1/2 text-center h-full'>
+          <h1 className='w-full mt-3 text-white text-4xl mt-15'>
             About Us
           </h1>
         </div>
         <div className='w-1/2'>
-          <p className='text-white text-center mt-0 mx-6 mb-6'>
+          <p className='text-white text-center mt-0 mx-10 mb-6'>
           The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
           </p>
         </div>
       </div>
+      <hr className='w-4/5 mx-auto' />
       <div className='w-full flex flex-col'>
         <div className='w-4/5 flex flex-row mx-auto'>
           <div style={{height: "490px"}} className='w-1/2'>

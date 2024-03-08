@@ -1,36 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const footerStyles = {
+    height: "100px"
+}
+
 function Footer() {
   return (
     <>
-            <span className='w-full h-20 bg-yellow-400 text-4xl flex items-center justify-center'>
-                <h1 className=''>
-                    JOIN THE ASTRO-QUANTUM JU CLUB TODAY!!!
-                </h1>
-            </span>
-            <div className='flex justify-end' >
-                <ul className='flex flex-row'>
-                    <li  className="transition duration-150 ease-in-out hover:underline hover:scale-110 p-2">
+            <div style={footerStyles} className='flex justify-end bg-orange-700' >
+                <ul className='flex flex-row mx-auto mt-10'>
+                    <li  className="text-2xl transition duration-150 ease-in-out hover:underline hover:scale-110 p-4 text-white font-bold">
                         <Link to="/">
                             Home
                         </Link>
                     </li>
                     
-                    <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
+                    <li  className='text-2xl font-bold text-white transition duration-150 ease-in-out hover:underline hover:scale-110 p-4'>
                         <Link to="/about">
                             About
                         </Link>
                     </li>
-                    <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
+                    <li  className='text-2xl font-bold text-white transition duration-150 ease-in-out hover:underline hover:scale-110 p-4'>
                         <Link to="/contact">
                             Contact
                         </Link>
                     </li>
-                    <li  className='transition duration-150 ease-in-out hover:underline hover:scale-110 p-2'>
-                        <a href="">
-                            GitHub
-                        </a>
+                    <li  className='text-2xl font-bold text-white transition duration-150 ease-in-out hover:underline hover:scale-110 p-4'>
+                        <Link to="/blogs">
+                            Blogs
+                        </Link>
                     </li>
                 </ul>
             </div>
