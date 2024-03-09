@@ -4,6 +4,7 @@ import gifBackground from "../assets/login-page-pgif.gif";
 import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
+import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useUserContext } from '../contexts/UserContext';
 
@@ -72,6 +73,7 @@ function Login() {
                     password: "",
                     "phone or email": ""
                 });
+                toast.success('Login successful');
             }
 
         } catch (error) {
