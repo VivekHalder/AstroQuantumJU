@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
+import { ApiError } from "../utils/ApiError";
+import { ApiResponse } from "../utils/ApiResponse";
 
 const userSchema = new Schema({
     name: {
@@ -42,6 +44,11 @@ const userSchema = new Schema({
     },
     refreshToken: {
         type: String
+    },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        default: "user"
     }
 });
 
@@ -83,5 +90,33 @@ userSchema.methods.generateRefreshToken = function(){
         }
     );
 }
+
+userSchema.statics.addAdmin = async function (userID){
+    try{
+        const user = await this.findById(userID);
+
+        if(!user){
+            return new ApiError(
+                404,
+                "User not found while promoting to admin."
+            );            
+        }
+
+        user.role = "admin";
+        user.save( { validationBeforeSave: false } );
+
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                userID,
+                "User promoted to admin successfully."
+            )
+        );
+    } catch(error){
+        console.log(`Error occured while making a user admin. Error: ${userID}.`);
+    }
+} 
 
 export const User = mongoose.model( "User", userSchema );
