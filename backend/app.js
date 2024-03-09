@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { limit } from './constants.js';
+import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 const app = express();
 
@@ -18,6 +19,9 @@ import useRoute from './routes/user.routes.js'
 app.use("/api/v1/users", useRoute);
 
 import blogRoutes from './routes/blog.routes.js';
+import { errorHandler } from './middlewares/errorHandler.middleware.js';
 app.use("/api/v1/blogs", blogRoutes);
+
+app.use(errorHandler);
 
 export { app };
