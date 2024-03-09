@@ -19,7 +19,6 @@ import useRoute from './routes/user.routes.js'
 app.use("/api/v1/users", useRoute);
 
 import blogRoutes from './routes/blog.routes.js';
-import { errorHandler } from './middlewares/errorHandler.middleware.js';
 app.use("/api/v1/blogs", blogRoutes);
 
 app.use(errorHandler);
