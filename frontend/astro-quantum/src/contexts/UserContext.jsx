@@ -20,15 +20,12 @@ export const UserProvider = ({children}) => {
     const [ isUserPresent, setIsUserPresent ] = useState(null);
 
     useEffect(() => {
-        console.log("Changed");
         if(isUserPresent === null){
 
         } else if(!actualUserData || Object.keys(actualUserData).length === 0){
-            console.log("no there");
             setIsUserPresent(false);
             return ;
         } else{
-            console.log("done");
             localStorage.setItem('user', JSON.stringify(actualUserData));
             setIsUserPresent(true);
         }

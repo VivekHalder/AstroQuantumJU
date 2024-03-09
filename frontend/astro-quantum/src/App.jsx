@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog } from './components/index';
+import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin } from './components/index';
 import { UserProvider } from './contexts/UserContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/read-blog',
         element: <PreviewBlog/>
+      },
+      {
+        path: '/make-admin',
+        element: <MakeAdmin/>
       }
     ],
   },
@@ -55,6 +60,7 @@ function App() {
       <UserProvider>
         <RouterProvider router={router}/>
       </UserProvider>
+      <Toaster />
     </>
   )
 }

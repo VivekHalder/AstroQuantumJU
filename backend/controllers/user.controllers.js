@@ -318,4 +318,35 @@ const updateDetails = asyncHandler( async( req, res, next ) => {
     }
 } );
 
-export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails };
+const getNormalUsers = asyncHandler( async( req, res, next ) => {
+    try {
+        const users = await User.aggregate([
+            {
+              $match: {
+                role: "user"
+              }
+            }
+        ]);
+
+        if(!users){
+            throw new ApiError(
+                404,
+                "Error occured in fetching the users."
+            );
+        }
+    
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                users,
+                "All users fetched."
+            )
+        );
+    } catch (error) {
+        console.log(`Error occured while fetching the users. Error: ${error.message}.`);
+    }
+} )
+
+export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails, getNormalUsers };

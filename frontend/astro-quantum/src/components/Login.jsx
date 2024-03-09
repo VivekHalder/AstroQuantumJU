@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import logo from "../assets/Asto-sci logo-horizontal-W.svg";
 import gifBackground from "../assets/login-page-pgif.gif";
 import "./styles/auth.css";
 import axios from 'axios';
 import validator from 'validator';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { useUserContext } from '../contexts/UserContext';
 
@@ -12,7 +12,7 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const { setActualUserData } = useUserContext();
+    const { actualUserData, setActualUserData } = useUserContext();
 
     const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
@@ -77,7 +77,9 @@ function Login() {
             }
 
         } catch (error) {
-            console.log("Error occured whiling logging the user in. Error ", error?.message);
+            toast.error('Login failed');
+            toast.error(error.response.data.message);
+
         } finally {
             setIsLoggingIn(false);
         }

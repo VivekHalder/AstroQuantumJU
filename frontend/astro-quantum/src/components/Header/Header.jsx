@@ -2,12 +2,13 @@ import React from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUserContext } from '../../contexts/UserContext';
-import logo from "../../assets/Asto-sci logo-horizontal-W.svg"
+import logo from "../../assets/Asto-sci logo-horizontal-W.svg";
+import { toast } from 'react-hot-toast';
 
 function Header() {
   const navigate = useNavigate();
 
-  const { isUserPresent } = useUserContext();
+  const { actualUserData, setActualUserData,isUserPresent } = useUserContext();
 
   async function logoutUser(){
     
@@ -17,7 +18,10 @@ function Header() {
       if( logoutResponse ){
         console.log("User logged-out successfully.");
         localStorage.removeItem( 'user' );
+        setActualUserData({});
         navigate('/login');
+        localStorage.removeItem('user');
+        toast.success('Logged-out successfully.');
       } else{
         console.log("Error occurred");
       }
@@ -101,6 +105,18 @@ function Header() {
                   Blogs
                 </NavLink>
               </li>
+              { Object.keys(actualUserData).length > 0 && actualUserData.role === "admin" &&
+                <li>
+                  <NavLink
+                  to="/make-admin"
+                  className={({isActive}) =>
+                      `text-xl block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-white"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    }
+                  >
+                    Make Admin
+                  </NavLink>
+                </li>
+              }
             </ul>
           </div>
         </div>
