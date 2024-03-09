@@ -1,9 +1,22 @@
-import React from 'react';
-import axios from 'axios'
-;
-const users = await axios.get(VITE_APP_BACKEND_API_GET_NORMAL_USERS);
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 function MakeAdmin() {
+  const [ users, setUsers ] = useState([]);
+
+  async function getUsers(){
+    const res = await axios.get(import.meta.env.VITE_APP_BACKEND_API_GET_NORMAL_USERS);
+
+    setUsers(res.data.data.users);
+
+    console.log(users);
+  }
+
+  useEffect( () => {
+    getUsers();
+  }, [] );
+
   return (
     <div className='w-full bg-black'>
         <div>
