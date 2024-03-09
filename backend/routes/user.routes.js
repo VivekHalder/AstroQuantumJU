@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticateUser, getCurrentUser, getNormalUsers, loginUser, logoutUser, registerUser, updateDetails } from "../controllers/user.controllers.js";
+import { authenticateUser, getAdmins, getCurrentUser, getNormalUsers, loginUser, logoutUser, registerUser, updateDetails } from "../controllers/user.controllers.js";
 import { verifyJWT } from '../middlewares/auth.middleware.js';
 
 
@@ -14,5 +14,6 @@ router.route("/current-user").get( verifyJWT, getCurrentUser );
 router.route("/authenticateUser").post( verifyJWT, authenticateUser );
 router.route("/updateUserDetails").patch( verifyJWT, updateDetails );
 router.route("/get-normal-users").get( getNormalUsers );
+router.route("/get-admins").get( getAdmins );
 
 export default router;

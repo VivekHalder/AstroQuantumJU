@@ -27,6 +27,14 @@ function MakeAdmin() {
               users
             }
         </div>
+        <div>
+            <h1 className='text-center text-white font-bold text-3xl'>
+                Users
+            </h1>
+            {
+              users
+            }
+        </div>
     </div>
   )
 }

@@ -347,6 +347,37 @@ const getNormalUsers = asyncHandler( async( req, res, next ) => {
     } catch (error) {
         console.log(`Error occured while fetching the users. Error: ${error.message}.`);
     }
-} )
+} );
 
-export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails, getNormalUsers };
+const getAdmins = asyncHandler( async( req, res, next ) => {
+    try {
+        const admins = await User.aggregate([
+            {
+              $match: {
+                role: "admin"
+              }
+            }
+        ]);
+
+        if(!admins){
+            throw new ApiError(
+                404,
+                "Error occured in fetching the admins."
+            );
+        }
+    
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                admins,
+                "All admins fetched."
+            )
+        );
+    } catch (error) {
+        console.log(`Error occured while fetching the admins. Error: ${error.message}.`);
+    }
+} );
+
+export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails, getNormalUsers, getAdmins };
