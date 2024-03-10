@@ -15,6 +15,6 @@ router.route("/authenticateUser").post( verifyJWT, authenticateUser );
 router.route("/updateUserDetails").patch( verifyJWT, updateDetails );
 router.route("/get-normal-users").get( getNormalUsers );
 router.route("/get-admins").get( getAdmins );
-router.route("/make-admins").get( makeAdmin );
+router.route("/make-admins").patch( verifyJWT, makeAdmin );
 
 export default router;

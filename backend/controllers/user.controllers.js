@@ -382,7 +382,15 @@ const getAdmins = asyncHandler( async( req, res, next ) => {
 
 const makeAdmin = asyncHandler( async(req, res, next) => {
     const { userId } = req.body;
+    const presentAdmin = req.user;
     try {
+
+            if(presentAdmin.role === "user"){
+                throw new ApiError(
+                    403,
+                    "The user is not Authorized to Grant adminship to someone."
+                )
+            }
             const user = await User.findById( userId );
     
             if(!user){
@@ -394,7 +402,7 @@ const makeAdmin = asyncHandler( async(req, res, next) => {
     
             if(user.role === "admin"){
                 throw ApiError(
-                    402,
+                    400,
                     "User is already an admin."
                 );
             }
