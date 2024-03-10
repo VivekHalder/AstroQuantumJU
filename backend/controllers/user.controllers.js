@@ -381,7 +381,7 @@ const getAdmins = asyncHandler( async( req, res, next ) => {
 } );
 
 const makeAdmin = asyncHandler( async(req, res, next) => {
-    const { userId } = req.body;
+    const { selectedUserId } = req.body;
     const presentAdmin = req.user;
     try {
 
@@ -391,7 +391,7 @@ const makeAdmin = asyncHandler( async(req, res, next) => {
                     "The user is not Authorized to Grant adminship to someone."
                 )
             }
-            const user = await User.findById( userId );
+            const user = await User.findById( selectedUserId );
     
             if(!user){
                 throw ApiError(
@@ -410,7 +410,7 @@ const makeAdmin = asyncHandler( async(req, res, next) => {
             user.role = "admin";
             user.save({validateBeforeSave: false});
     
-            const updatedUser = await User.findById(userId).select("-refreshToken -password");
+            const updatedUser = await User.findById(selectedUserId).select("-refreshToken -password");
 
             console.log(updatedUser);
     

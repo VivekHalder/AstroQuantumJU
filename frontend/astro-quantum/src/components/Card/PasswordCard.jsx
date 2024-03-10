@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const OVERLAY_STYLE = {
   position: 'fixed',
@@ -65,12 +66,10 @@ function PasswordCard({ openModal, setOpenModal, setUser, user, actualUser, setA
 
     async function handleOnSubmit(){
         try {
-          //console.log(import.meta.env.VITE_APP_BACKEND_API_AUTHENTICATE_USER_END_POINT,);
           setPassword( "" );
           const res = await axios.post( import.meta.env.VITE_APP_BACKEND_API_AUTHENTICATE_USER_END_POINT, { password: password }, { withCredentials: true } );
-          
-          //console.log(`this is ${res.data}`)
-          if( res?.data && res?.data?.success ){
+
+          if( res.status === 200 ){
             try {
               let emailChange = false;
               let phoneChange = false;
@@ -78,19 +77,23 @@ function PasswordCard({ openModal, setOpenModal, setUser, user, actualUser, setA
               if( user.phone !== actualUser.phone ) phoneChange = true;
               const res_update = await axios.patch( import.meta.env.VITE_APP_BACKEND_API_UPDATE_USER_DETAILS_END_POINT, { email: user.email, phone: user.phone, name: user.name, emailChange, phoneChange }, { withCredentials: true } );
 
-              if( res_update?.data ){
+              if( res_update.status === 200 ){
                 console.log( res_update );
                 actualUser = Object.assign( {}, user );
                 localStorage.setItem( 'user', JSON.stringify( actualUser ) );
                 setActualUser( JSON.parse( localStorage.getItem( 'user' ) ) );
-                setUser( {...actualUser} )
+                setUser( {...actualUser} );
+                toast.success("Details updated successfully.")
               }
-
             } catch (error) {
               console.log(`Error occured while updating the details. Error: ${ error.message }`);
             }
             setOpenModal( false );
+          } else{
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
           }
+
         } catch (error) {
           console.log(`Error: ${ error.message }`);
         }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
 function MakeAdmin() {
@@ -7,6 +8,7 @@ function MakeAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [password, setPassword] = useState('');
 
   async function getUsers() {
     const resu = await axios.get(import.meta.env.VITE_APP_BACKEND_API_GET_NORMAL_USERS);
@@ -25,19 +27,38 @@ function MakeAdmin() {
     setShowOverlay(true);
   }
 
-  function confirmMakeAdmin() {
+  async function confirmMakeAdmin(password) {
+    try {
+      const authRes = await axios.post(import.meta.env.VITE_APP_BACKEND_API_AUTHENTICATE_USER_END_POINT, { password }, { withCredentials: true });
+  
+      try {
+        if (authRes.status === 200) {
+          const res = await axios.patch(import.meta.env.VITE_APP_BACKEND_API_MAKE_ADMINS, selectedUserId, { withCredentials: true });
+    
+          if (res.status === 200) {
+            getUsers();
+            toast.success("The user promoted to admin successfully.");
+          }
+        }
+      } catch (error) {
+        console.log(`Error occurred while promoting the user: ${error.message}`);
+      }
+    } catch (error) {
+      console.log(`Error occurred while promoting the user: ${error.message}`);
+    }
     setShowOverlay(false);
   }
 
   function cancelMakeAdmin() {
     setShowOverlay(false);
+    setPassword('');
   }
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredAdmins = admins.filter((admin) => 
+  const filteredAdmins = admins.filter((admin) =>
     admin.name.toLowerCase().includes(searchTerm.toLowerCase()) || admin.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -85,6 +106,13 @@ function MakeAdmin() {
           <div className="bg-white p-8 rounded-lg text-center">
             <p className="text-lg text-gray-800 mb-4">Are you sure you want to make this user an admin?</p>
             <p className="text-sm text-gray-600 mb-4">Once a user is made admin, the process can't be reversed.</p>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 mb-4"
+            />
             <div>
               <button onClick={confirmMakeAdmin} className="bg-orange-700 text-white px-4 py-2 rounded mr-4">Confirm</button>
               <button onClick={cancelMakeAdmin} className="bg-gray-300 text-gray-800 px-4 py-2 rounded">Cancel</button>
