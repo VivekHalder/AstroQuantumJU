@@ -380,4 +380,43 @@ const getAdmins = asyncHandler( async( req, res, next ) => {
     }
 } );
 
-export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails, getNormalUsers, getAdmins };
+const makeAdmin = asyncHandler( async(req, res, next) => {
+    const { userId } = req.body;
+    try {
+            const user = await User.findById( userId );
+    
+            if(!user){
+                throw ApiError(
+                    404,
+                    "User not found!!!"
+                )
+            }
+    
+            if(user.role === "admin"){
+                throw ApiError(
+                    402,
+                    "User is already an admin."
+                );
+            }
+    
+            user.role = "admin";
+            user.save({validateBeforeSave: false});
+    
+            const updatedUser = await User.findById(userId).select("-refreshToken -password");
+    
+            return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    updatedUser,
+                    "User successfully promoted to admin."
+                )
+            );
+    } catch (error) {
+        console.log(`Error occured while promoting an user to admin. Error: ${error.message}.`);
+    }
+
+} );
+
+export { registerUser, loginUser, logoutUser, getCurrentUser, authenticateUser, updateDetails, getNormalUsers, getAdmins, makeAdmin };
