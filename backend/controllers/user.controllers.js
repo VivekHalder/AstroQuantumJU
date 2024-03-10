@@ -411,6 +411,8 @@ const makeAdmin = asyncHandler( async(req, res, next) => {
             user.save({validateBeforeSave: false});
     
             const updatedUser = await User.findById(userId).select("-refreshToken -password");
+
+            console.log(updatedUser);
     
             return res
             .status(200)
