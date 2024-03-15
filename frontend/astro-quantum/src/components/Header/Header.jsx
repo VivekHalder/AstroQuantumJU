@@ -115,7 +115,7 @@ function Header() {
                   Blogs
                 </NavLink>
               </li>
-              { Object.keys(JSON.parse(localStorage.getItem('user'))).length > 0 && JSON.parse(localStorage.getItem('user')).role === "admin" &&
+              { (localStorage.getItem('user') && Object.keys(JSON.parse(localStorage.getItem('user'))) || {}).length > 0 && JSON.parse(localStorage.getItem('user')).role === "admin" &&
                 <li>
                   <NavLink
                   to="/make-admin"
