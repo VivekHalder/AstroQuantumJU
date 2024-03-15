@@ -41,7 +41,7 @@ function Header() {
             alt="logo" />
           </Link>
           <div className="flex items-center lg:order-2">
-            { Object.keys(JSON.parse(localStorage.getItem('user'))) ? 
+            { (localStorage.getItem('user') && Object.keys(JSON.parse(localStorage.getItem('user')) || {})) ? 
               <>
                 <Link
                   to="#"
@@ -115,7 +115,7 @@ function Header() {
                   Blogs
                 </NavLink>
               </li>
-              { (localStorage.getItem('user') && Object.keys(JSON.parse(localStorage.getItem('user'))) || {}).length > 0 && JSON.parse(localStorage.getItem('user')).role === "admin" &&
+              { (localStorage.getItem('user') && Object.keys(JSON.parse(localStorage.getItem('user')) || {})).length > 0 && JSON.parse(localStorage.getItem('user')).role === "admin" &&
                 <li>
                   <NavLink
                   to="/make-admin"
