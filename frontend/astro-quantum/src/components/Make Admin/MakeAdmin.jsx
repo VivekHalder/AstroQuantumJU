@@ -33,7 +33,7 @@ function MakeAdmin() {
   
       try {
         if (authRes.status === 200) {
-          const res = await axios.patch(import.meta.env.VITE_APP_BACKEND_API_MAKE_ADMINS, { selectedUserId }, { withCredentials: true });
+          const res = await axios.patch(import.meta.env.VITE_APP_BACKEND_API_MAKE_ADMINS, selectedUserId, { withCredentials: true });
     
           if (res.status === 200) {
             getUsers();
@@ -47,7 +47,6 @@ function MakeAdmin() {
       console.log(`Error occurred while promoting the user: ${error.message}`);
     }
     setShowOverlay(false);
-    setPassword('');
   }
 
   function cancelMakeAdmin() {
@@ -56,11 +55,11 @@ function MakeAdmin() {
   }
 
   const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase().trim()) || user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredAdmins = admins.filter((admin) =>
-    admin.name.toLowerCase().includes(searchTerm.toLowerCase().trim()) || admin.email.toLowerCase().includes(searchTerm.toLowerCase())
+    admin.name.toLowerCase().includes(searchTerm.toLowerCase()) || admin.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -78,20 +77,20 @@ function MakeAdmin() {
         <div>
           <h1 className="text-center text-white font-bold text-3xl">Users</h1>
           {filteredUsers.map((user) => (
-            <div key={user._id} className="p-4 border-b border-gray-300">
+            <div key={user.id} className="p-4 border-b border-gray-300">
               <div className="text-lg text-black">{user.name}</div>
               <div className="text-sm text-gray-600">Email: {user.email}</div>
               <div className="text-sm text-gray-600">Faculty: {user.faculty}</div>
               <div className="text-sm text-gray-600">Department: {user.department}</div>
               <div className="text-sm text-gray-600">Year: {user.year}</div>
-              <button onClick={() => makeAdmin(user._id)} className="bg-orange-700 text-white px-4 py-2 rounded mt-2">Make Admin</button>
+              <button onClick={() => makeAdmin(user.id)} className="bg-orange-700 text-white px-4 py-2 rounded mt-2">Make Admin</button>
             </div>
           ))}
         </div>
         <div className="mt-8">
           <h1 className="text-center text-white font-bold text-3xl">Admins</h1>
           {filteredAdmins.map((admin) => (
-            <div key={admin._id} className="p-4 border-b border-gray-300">
+            <div key={admin.id} className="p-4 border-b border-gray-300">
               <div className="text-lg text-black">{admin.name}</div>
               <div className="text-sm text-gray-600">Email: {admin.email}</div>
               <div className="text-sm text-gray-600">Faculty: {admin.faculty}</div>
@@ -115,7 +114,7 @@ function MakeAdmin() {
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 mb-4"
             />
             <div>
-              <button onClick={() => confirmMakeAdmin(password)} className="bg-orange-700 text-white px-4 py-2 rounded mr-4">Confirm</button>
+              <button onClick={confirmMakeAdmin} className="bg-orange-700 text-white px-4 py-2 rounded mr-4">Confirm</button>
               <button onClick={cancelMakeAdmin} className="bg-gray-300 text-gray-800 px-4 py-2 rounded">Cancel</button>
             </div>
           </div>
