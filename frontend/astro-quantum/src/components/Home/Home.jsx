@@ -5,6 +5,7 @@ import DescriptionCard from '../Card/DescriptionCard';
 import FAQCard from '../Card/FAQCard';
 import { useUserContext } from '../../contexts/UserContext';
 
+
 function Home() {
 
   const { setActualUserData, isUserPresent, setIsUserPresent } = useUserContext();
@@ -83,46 +84,44 @@ function Home() {
 
   
   return (
-    <>
-      <div className='h-full'>
-        <div className='mt-10 ml-6 w-1/2'>
-          <h1 className='mb-4 text-6xl font-semibold'>
-            Jadavpur University
-          </h1>
-          <h2 className='text-5xl my-6'>
-            AstroPhysics Club
-          </h2>
-          <div>
-            <p className='mt-6 leading-7'>
-              The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
-            </p>
-          </div>
-        </div>
+    <div className='bg-black text-white min-h-screen py-10'>
+      <div className='mt-10 ml-6 w-1/2'>
+        <h1 className='mb-4 text-6xl font-semibold'>
+          Jadavpur University
+        </h1>
+        <h2 className='text-5xl my-6'>
+          AstroPhysics Club
+        </h2>
         <div>
-          <h1 className='h-100 w-full text-center text-6xl mt-10 mb-20'>
-            What Do We Aim For?
-          </h1>
-            {
-              desc.map( ( element ) => {
-                return <DescriptionCard key={element.title} title={element.title} desciption={element.description}/>
-              } )
-            }
-        </div>
-        <div>
-            <h1 className='text-4xl ml-6 mt-4 mb-10'>
-              FAQs 
-            </h1>
-            <div className='mb-8'>
-              {
-                faq.map( ( element ) => (
-                  <FAQCard key={element.question} question={element.question} answer={element.answer} />
-                ) )
-              }
-            </div>
+          <p className='mt-6 leading-7'>
+            The First Astro Physics Club of Jadavpur University, Kolkata, India. The Astro Physics Club at Jadavpur University fosters a dynamic community of passionate students exploring the mysteries of the cosmos. Through discussions, stargazing events, and collaborative projects, members delve into the wonders of astro-physics, enhancing their astronomical understanding and scientific curiosity.
+          </p>
         </div>
       </div>
-    </>
+      <div>
+        <h1 className='h-100 w-full text-center text-6xl mt-10 mb-20'>
+          What Do We Aim For?
+        </h1>
+        {
+          desc.map( ( element ) => {
+            return <DescriptionCard key={element.title} title={element.title} desciption={element.description}/>
+          } )
+        }
+      </div>
+      <div>
+        <h1 className='text-4xl ml-6 mt-4 mb-10'>
+          FAQs 
+        </h1>
+        <div className='mb-8'>
+          {
+            faq.map( ( element ) => (
+              <FAQCard key={element.question} question={element.question} answer={element.answer} />
+            ) )
+          }
+        </div>
+      </div>
+    </div>
   )
 }
 
-export default Home
+export default Home;

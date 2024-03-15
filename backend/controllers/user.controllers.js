@@ -382,6 +382,7 @@ const getAdmins = asyncHandler( async( req, res, next ) => {
 
 const makeAdmin = asyncHandler( async(req, res, next) => {
     const { selectedUserId } = req.body;
+    console.log(selectedUserId)
     const presentAdmin = req.user;
     try {
 
