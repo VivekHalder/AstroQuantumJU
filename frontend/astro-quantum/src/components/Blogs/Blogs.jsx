@@ -48,7 +48,7 @@ function Blogs() {
   }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-black text-white'>
       <>
       {
         blogPresent ? ( 
