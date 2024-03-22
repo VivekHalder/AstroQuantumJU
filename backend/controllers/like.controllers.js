@@ -140,4 +140,45 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
     }
 });
 
-export { likeBlog, dislikeBlog };
+const countLikes = asyncHandler(async (req, res, next) => {
+    const { blogId } = req.body;
+
+    try {
+        if(!blogId){
+            throw new ApiError(
+                400,
+                "Blog ID is required to find the number of likes."
+            );
+        }
+    
+        const likeCount = await Like.aggregate(
+            [
+                {
+                  $match: {
+                    post: ObjectId(blogId),
+                    likeType: true
+                  }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        count: { $sum: 1 }
+                    }
+                }
+            ]
+        );
+    
+        return res
+            .status(200)
+            .json( new ApiResponse(
+                200,
+                likeCount.length > 0 ? likeCount[0].count : 0,
+                "Number of liked retrieved."
+            ) );
+    } catch (error) {
+        console.log(`Error occured. Error: ${error}`);
+        next(error);
+    }
+});
+
+export { likeBlog, dislikeBlog, countLikes };
