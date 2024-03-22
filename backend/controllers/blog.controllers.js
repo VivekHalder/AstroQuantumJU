@@ -77,6 +77,7 @@ const getAllPost = asyncHandler( async ( req, res, next ) => {
         },
         {
             $project: {
+                "id": "_id",
                 "title": "$title",
                 "coverImg": "$coverImg",
                 "content": "$content",

@@ -15,11 +15,14 @@ app.use(express.urlencoded({extended: true , limit: `${limit}`}));
 
 app.use(cookieParser());
 
-import useRoute from './routes/user.routes.js'
-app.use("/api/v1/users", useRoute);
+import userRoute from './routes/user.routes.js'
+app.use("/api/v1/users", userRoute);
 
 import blogRoutes from './routes/blog.routes.js';
 app.use("/api/v1/blogs", blogRoutes);
+
+import likeRoutes from './routes/like.routes.js';
+app.use("/api/v1/likes", likeRoutes)
 
 app.use(errorHandler);
 
