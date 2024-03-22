@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { dislikeBlog, likeBlog } from '../controllers/like.controllers';
-import { verifyJWT } from '../middlewares/auth.middleware';
+import { dislikeBlog, likeBlog } from '../controllers/like.controllers.js';
+import { verifyJWT } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 

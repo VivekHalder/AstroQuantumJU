@@ -1,7 +1,7 @@
-import { Like } from "../models/likes.model";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
+import { Like } from "../models/likes.model.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const likeBlog = asyncHandler(async (req, res, error) => {
     const { blogId } = req.body;
