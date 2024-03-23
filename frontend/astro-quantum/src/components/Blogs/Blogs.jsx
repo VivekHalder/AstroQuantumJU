@@ -59,6 +59,7 @@ function Blogs() {
                 <BlogCard
                   onClick={() => handlePreview(blog)}
                   key={index} 
+                  id={blog._id}
                   imgLink={blog.coverImg} 
                   title={blog.title}
                   para={blog.content}
