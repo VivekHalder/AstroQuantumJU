@@ -57,27 +57,27 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
   }, [liked, disliked, likes, dislikes]);
 
   const handleLike = async () => {
-    if (!liked) {
-      const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LIKE_BLOG, { blogId: id }, { withCredentials: true });
-      if (res.status === 200) {
-        setLiked(true);
-        if (disliked) {
-          setDisliked(false);
-        }
+    const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LIKE_BLOG, { blogId: id }, { withCredentials: true });
+    if (res.status === 200) {
+      setLiked(true);
+      if (disliked) {
+        setDisliked(false);
       }
     }
+    getDislikesCount();
+    getLikesCount();
   };
 
   const handleDislike = async () => {
-    if (!disliked) {
-        const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_DISLIKE_BLOG, { blogId: id }, { withCredentials: true });
-        if(res.status === 200){
-            setDisliked(true);
-            if(liked){
-                setLiked(false);
-            }
-        }
+    const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_DISLIKE_BLOG, { blogId: id }, { withCredentials: true });
+    if(res.status === 200){
+      setDisliked(true);
+      if(liked){
+        setLiked(false);
+      }
     }
+    getDislikesCount();
+    getLikesCount();
   };
 
   return (
