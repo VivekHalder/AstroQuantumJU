@@ -197,7 +197,7 @@ const countDislikes = asyncHandler(async (req, res, next) => {
             [
                 {
                     $match: {
-                        post: mongoose.Types.ObjectId(blogId),
+                        post: new mongoose.Types.ObjectId(blogId),
                         likeType: false
                     }
                 },
