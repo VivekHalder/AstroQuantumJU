@@ -67,7 +67,7 @@ const likeBlog = asyncHandler(async (req, res, error) => {
             }
         }
     } catch (error) {
-        console.log(`Error occured. ${error}`);
+        console.log(`Error occured. ${error.message}`);
         next(error)
     }
 });
@@ -136,7 +136,7 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
             }
         }
     } catch (error) {
-        console.log(`Error occurred: ${error}`);
+        console.log(`Error occurred: ${error.message}`);
         next(error);
     }
 });
@@ -177,7 +177,7 @@ const countLikes = asyncHandler(async (req, res, next) => {
                 "Number of likes retrieved."
             ) );
     } catch (error) {
-        console.log(`Error occured. Error: ${error}`);
+        console.log(`Error occured. Error: ${error.message}`);
         next(error);
     }
 });
@@ -229,9 +229,84 @@ const countDislikes = asyncHandler(async (req, res, next) => {
                 )
             );
     } catch (error) {
-        console.log(`Error occured. Error: ${error}`);
+        console.log(`Error occured. Error: ${error.message}`);
         next(error);
     }
 });
 
-export { likeBlog, dislikeBlog, countLikes, countDislikes };
+const hasReacted = asyncHandler(async (req, res, next) => {
+    const { user } = req.user;
+    const { blogId } = req.query;
+
+    try {
+        if(!user){
+            throw new ApiError(
+                404,
+                "Please login to react to posts."
+            )
+        }
+    
+        if(!blogId){
+            throw new ApiError(
+                400,
+                "Blog ID cannot be empty."
+            )
+        }
+    
+        const reaction = await Like.aggregate(
+            [
+                {
+                    $match: {
+                        likedBy: new mongoose.Types.ObjectId(user._id),
+                        post: new mongoose.Types.ObjectId(blogId)
+                    }
+                }
+            ]
+        );
+    
+        if(!reaction){
+            throw new ApiError(
+                500,
+                "Error occured while fetching the reaction of the user."
+            )
+        }
+    
+        if(reaction.length === 0){
+            return res
+                .status(200)
+                .json(
+                    new ApiResponse(
+                        200,
+                        0,
+                        "The user didn't react to it."
+                    )
+                );
+        }
+    
+        if(reaction.likeType === true){
+            return res
+                .status(200)
+                .json(
+                    new ApiResponse(
+                        200,
+                        1,
+                        "User liked the post."
+                    )
+                )
+        }
+    
+        return res
+            .status(200)
+            .json(
+                new ApiRespponse(
+                    200,
+                    -1,
+                    "User disliked the post."
+                )
+            )
+    } catch (error) {
+        console.log(`Error occured. Error: ${error.message}`);
+    }
+});
+
+export { likeBlog, dislikeBlog, countLikes, countDislikes, hasReacted };
