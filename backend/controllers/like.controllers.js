@@ -142,7 +142,7 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
 });
 
 const countLikes = asyncHandler(async (req, res, next) => {
-    const { blogId } = req.body;
+    const { blogId } = req.query;
 
     console.log("this is the blogid", blogId);
 
