@@ -43,10 +43,27 @@ const likeBlog = asyncHandler(async (req, res, error) => {
             ));
         } else{
             if(existingLike.likeType === true){
-                throw new ApiError(
-                    400,
-                    "Already Liked!!!"
-                )
+                await Like.deleteOne({ 
+                    likedBy: id,
+                    post: blogId
+                })
+                .then(() => {
+                    return res
+                        .status(200)
+                        .json(
+                            new ApiResponse(
+                                200,
+                                true,
+                                "Like removed"
+                            )
+                        )
+                })
+                .catch((error) => {
+                    throw new ApiError(
+                        500,
+                        "Couldnot delete the exisiting like."
+                    )
+                })
             } else{
                 existingLike.likeType = true;
                 const updatedLike = await existingLike.save();
@@ -116,7 +133,27 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
             }
         } else {
             if (existingLike.likeType === false) {
-                throw new ApiError(400, "Already disliked!!!");
+                await Like.deleteOne({
+                    post: blogId,
+                    likedBy: id
+                })
+                .then(() => {
+                    return res
+                        .status(200)
+                        .json(
+                            new ApiResponse(
+                                200,
+                                true,
+                                "Dislike removed"
+                            )
+                        )
+                })
+                .catch((error) => {
+                    throw new ApiError(
+                        500,
+                        "Couldnot remove existing dislike"
+                    )
+                })
             } else {
                 existingLike.likeType = false;
                 const updatedLike = await existingLike.save();
@@ -264,7 +301,6 @@ const hasReacted = asyncHandler(async (req, res, next) => {
             ]
         );
 
-        console.log(reaction);
     
         if(!reaction){
             throw new ApiError(

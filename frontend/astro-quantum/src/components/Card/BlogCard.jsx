@@ -14,7 +14,6 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
     try {
       const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_HAS_REACTED}?blogId=${id}`, { withCredentials: true } );
       if(res.data.data === -1){
-        console.log("entered")
         setDisliked(true);
         setLiked(false);
       }
