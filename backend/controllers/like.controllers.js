@@ -144,8 +144,6 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
 const countLikes = asyncHandler(async (req, res, next) => {
     const { blogId } = req.query;
 
-    console.log("this is the blogid", blogId);
-
     try {
         if(!blogId){
             throw new ApiError(
@@ -176,7 +174,7 @@ const countLikes = asyncHandler(async (req, res, next) => {
             .json( new ApiResponse(
                 200,
                 likeCount.length > 0 ? likeCount[0].count : 0,
-                "Number of liked retrieved."
+                "Number of likes retrieved."
             ) );
     } catch (error) {
         console.log(`Error occured. Error: ${error}`);
@@ -184,4 +182,56 @@ const countLikes = asyncHandler(async (req, res, next) => {
     }
 });
 
-export { likeBlog, dislikeBlog, countLikes };
+const countDislikes = asyncHandler(async (req, res, next) => {
+    const { blogId } = req.query;
+
+    try {
+        if(!blogId){
+            throw new ApiResponse(
+                400,
+                "Blog ID is required to find the number of dislikes."
+            );
+        }
+    
+        const dislikeCount = await Like.aggregate(
+            [
+                {
+                    $match: {
+                        post: mongoose.Types.ObjectId(blogId),
+                        likeType: false
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        count: {
+                            $sum: 1
+                        }
+                    }
+                }
+            ]
+        );
+    
+        if(!dislikeCount){
+            throw new ApiError(
+                500,
+                "Error occured while counting the number of dislikes."
+            );
+        }
+    
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    dislikeCount.length > 0 ? dislikeCount[0].count : 0,
+                    "Number of dislikes retrieved."
+                )
+            );
+    } catch (error) {
+        console.log(`Error occured. Error: ${error}`);
+        next(error);
+    }
+});
+
+export { likeBlog, dislikeBlog, countLikes, countDislikes };
