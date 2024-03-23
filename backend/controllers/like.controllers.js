@@ -235,7 +235,7 @@ const countDislikes = asyncHandler(async (req, res, next) => {
 });
 
 const hasReacted = asyncHandler(async (req, res, next) => {
-    const { user } = req.user;
+    const user = req.user;
     const { blogId } = req.query;
 
     try {
@@ -257,7 +257,7 @@ const hasReacted = asyncHandler(async (req, res, next) => {
             [
                 {
                     $match: {
-                        likedBy: new mongoose.Types.ObjectId(user._id),
+                        likedBy: new mongoose.Types.ObjectId(user.id),
                         post: new mongoose.Types.ObjectId(blogId)
                     }
                 }
@@ -298,7 +298,7 @@ const hasReacted = asyncHandler(async (req, res, next) => {
         return res
             .status(200)
             .json(
-                new ApiRespponse(
+                new ApiResponse(
                     200,
                     -1,
                     "User disliked the post."
