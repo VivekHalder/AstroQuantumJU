@@ -263,6 +263,8 @@ const hasReacted = asyncHandler(async (req, res, next) => {
                 }
             ]
         );
+
+        console.log(reaction);
     
         if(!reaction){
             throw new ApiError(
@@ -295,15 +297,17 @@ const hasReacted = asyncHandler(async (req, res, next) => {
                 )
         }
     
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(
-                    200,
-                    -1,
-                    "User disliked the post."
+        if (reaction.likeType === false) {
+            return res
+                .status(200)
+                .json(
+                    new ApiResponse(
+                        200,
+                        -1,
+                        "User disliked the post."
+                    )
                 )
-            )
+        }
     } catch (error) {
         console.log(`Error occured. Error: ${error.message}`);
     }
