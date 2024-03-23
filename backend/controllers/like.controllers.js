@@ -2,6 +2,7 @@ import { Like } from "../models/likes.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import mongoose from "mongoose";
 
 const likeBlog = asyncHandler(async (req, res, error) => {
     const { blogId } = req.body;
@@ -143,6 +144,8 @@ const dislikeBlog = asyncHandler(async (req, res, next) => {
 const countLikes = asyncHandler(async (req, res, next) => {
     const { blogId } = req.body;
 
+    console.log("this is the blogid", blogId);
+
     try {
         if(!blogId){
             throw new ApiError(
@@ -155,7 +158,7 @@ const countLikes = asyncHandler(async (req, res, next) => {
             [
                 {
                   $match: {
-                    post: ObjectId(blogId),
+                    post: new mongoose.Types.ObjectId(blogId),
                     likeType: true
                   }
                 },
