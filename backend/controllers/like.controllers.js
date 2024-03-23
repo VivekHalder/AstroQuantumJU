@@ -285,7 +285,7 @@ const hasReacted = asyncHandler(async (req, res, next) => {
                 );
         }
     
-        if(reaction.likeType === true){
+        if(reaction[0].likeType === true){
             return res
                 .status(200)
                 .json(
@@ -297,7 +297,7 @@ const hasReacted = asyncHandler(async (req, res, next) => {
                 )
         }
     
-        if (reaction.likeType === false) {
+        if (reaction[0].likeType === false) {
             return res
                 .status(200)
                 .json(
