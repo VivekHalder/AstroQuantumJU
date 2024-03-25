@@ -224,7 +224,7 @@ const countDislikes = asyncHandler(async (req, res, next) => {
 
     try {
         if(!blogId){
-            throw new ApiResponse(
+            throw new ApiError(
                 400,
                 "Blog ID is required to find the number of dislikes."
             );
