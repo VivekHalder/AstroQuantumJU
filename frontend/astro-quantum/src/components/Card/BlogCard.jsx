@@ -34,22 +34,27 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
 
   const getLikesCount = useCallback(async () => {
     try {
+      console.log("Fetching likes count...");
       const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}` );
+      console.log("Likes Count Response:", res.data); // Log the response
       setLikes(res.data.data);
     } catch (error) {
-      console.log(`Error occured. Error: ${error.message}`);
+      console.log(`Error occurred. Error: ${error.message}`);
     }
   }, [liked, disliked, likes, dislikes]);
-
+  
   const getDislikesCount = useCallback(async () => {
     try {
+      console.log("Fetching dislikes count...");
       const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_DISLIKE_COUNT}?blogId=${id}` ); 
+      console.log("Dislikes Count Response:", res.data); // Log the response
       setDislikes(res.data.data);
     } catch (error) {
-      console.log(`Error occured. Error: ${error.message}`)
+      console.log(`Error occurred. Error: ${error.message}`)
     }
   }, [liked, disliked, likes, dislikes]);
 
+  
   useEffect(() => {
     hasReacted();
     getLikesCount();
