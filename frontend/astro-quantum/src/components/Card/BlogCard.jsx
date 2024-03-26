@@ -33,6 +33,7 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
 
   const getLikesCount = useCallback(async () => {
     try {
+      console.log(`${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}`);
       const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}`);
       return res.data.data;
     } catch (error) {
@@ -43,6 +44,7 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
 
   const getDislikesCount = useCallback(async () => {
     try {
+      console.log(`${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}`);
       const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_API_DISLIKE_COUNT}?blogId=${id}`);
       return res.data.data;
     } catch (error) {
