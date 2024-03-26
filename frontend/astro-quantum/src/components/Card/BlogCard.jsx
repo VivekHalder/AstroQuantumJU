@@ -12,77 +12,93 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
 
   const hasReacted = useCallback(async () => {
     try {
-      const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_HAS_REACTED}?blogId=${id}`, { withCredentials: true } );
-      if(res.data.data === -1){
+      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_API_HAS_REACTED}?blogId=${id}`, { withCredentials: true });
+      const reaction = res.data.data;
+
+      // Set liked and disliked based on reaction data
+      if (reaction === -1) {
         setDisliked(true);
         setLiked(false);
-      }
-  
-      else if(res.data.data === 1){
+      } else if (reaction === 1) {
         setDisliked(false);
         setLiked(true);
-      }
-  
-      else if(res.data.data === 0){
+      } else {
         setDisliked(false);
         setLiked(false);
       }
     } catch (error) {
-      console.log(`Error occured. Error: ${error}.`);
+      console.log(`Error occurred while checking reaction: ${error.message}`);
     }
-  }, [liked, disliked, likes, dislikes]);
+  }, [id]);
 
   const getLikesCount = useCallback(async () => {
     try {
-      console.log("Fetching likes count...");
-      const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}` );
-      console.log("Likes Count Response:", res.data); // Log the response
-      setLikes(res.data.data);
+      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_API_LIKE_COUNT}?blogId=${id}`);
+      return res.data.data;
     } catch (error) {
-      console.log(`Error occurred. Error: ${error.message}`);
+      console.log(`Error fetching likes count: ${error.message}`);
+      return 0;
     }
-  }, [liked, disliked, likes, dislikes]);
-  
+  }, [id]);
+
   const getDislikesCount = useCallback(async () => {
     try {
-      console.log("Fetching dislikes count...");
-      const res = await axios.get( `${import.meta.env.VITE_APP_BACKEND_API_DISLIKE_COUNT}?blogId=${id}` ); 
-      console.log("Dislikes Count Response:", res.data); // Log the response
-      setDislikes(res.data.data);
+      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_API_DISLIKE_COUNT}?blogId=${id}`);
+      return res.data.data;
     } catch (error) {
-      console.log(`Error occurred. Error: ${error.message}`)
+      console.log(`Error fetching dislikes count: ${error.message}`);
+      return 0;
     }
-  }, [liked, disliked, likes, dislikes]);
+  }, [id]);
 
-  
   useEffect(() => {
-    hasReacted();
-    getLikesCount();
-    getDislikesCount();
-  }, [liked, disliked, likes, dislikes]);
+    const fetchData = async () => {
+      try {
+        const [likesCount, dislikesCount] = await Promise.all([
+          getLikesCount(),
+          getDislikesCount()
+        ]);
+        setLikes(likesCount);
+        setDislikes(dislikesCount);
+        hasReacted();
+      } catch (error) {
+        console.log(`Error fetching data: ${error.message}`);
+      }
+    };
+
+    fetchData();
+  }, [id, getLikesCount, getDislikesCount, hasReacted]);
 
   const handleLike = async () => {
-    const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LIKE_BLOG, { blogId: id }, { withCredentials: true });
-    if (res.status === 200) {
-      setLiked(true);
-      if (disliked) {
-        setDisliked(false);
+    try {
+      const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LIKE_BLOG, { blogId: id }, { withCredentials: true });
+      if (res.status === 200) {
+        setLiked(true);
+        if (disliked) {
+          setDisliked(false);
+          setDislikes(prev => prev - 1);
+        }
+        setLikes(prev => prev + 1);
       }
+    } catch (error) {
+      console.log(`Error liking blog: ${error.message}`);
     }
-    getDislikesCount();
-    getLikesCount();
   };
 
   const handleDislike = async () => {
-    const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_DISLIKE_BLOG, { blogId: id }, { withCredentials: true });
-    if(res.status === 200){
-      setDisliked(true);
-      if(liked){
-        setLiked(false);
+    try {
+      const res = await axios.post(import.meta.env.VITE_APP_BACKEND_API_DISLIKE_BLOG, { blogId: id }, { withCredentials: true });
+      if (res.status === 200) {
+        setDisliked(true);
+        if (liked) {
+          setLiked(false);
+          setLikes(prev => prev - 1);
+        }
+        setDislikes(prev => prev + 1);
       }
+    } catch (error) {
+      console.log(`Error disliking blog: ${error.message}`);
     }
-    getDislikesCount();
-    getLikesCount();
   };
 
   return (
@@ -117,7 +133,7 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 export default BlogCard;
