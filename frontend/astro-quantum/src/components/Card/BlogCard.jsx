@@ -80,7 +80,7 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
           setDisliked(false);
           setDislikes(prev => prev - 1);
         }
-        setLikes(prev => prev + 1);
+        if(!liked) setLikes(prev => prev + 1);
       }
     } catch (error) {
       console.log(`Error liking blog: ${error.message}`);
@@ -96,7 +96,7 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
           setLiked(false);
           setLikes(prev => prev - 1);
         }
-        setDislikes(prev => prev + 1);
+        if(!disliked) setDislikes(prev => prev + 1);
       }
     } catch (error) {
       console.log(`Error disliking blog: ${error.message}`);
