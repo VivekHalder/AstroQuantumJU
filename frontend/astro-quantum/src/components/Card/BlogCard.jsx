@@ -61,7 +61,9 @@ function BlogCard({ onClick, id, imgLink, title, para, author, date, time }) {
           getDislikesCount()
         ]);
         setLikes(likesCount);
+        console.log(likesCount);
         setDislikes(dislikesCount);
+        console.log(dislikesCount);
         hasReacted();
       } catch (error) {
         console.log(`Error fetching data: ${error.message}`);
