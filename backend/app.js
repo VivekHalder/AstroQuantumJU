@@ -22,7 +22,10 @@ import blogRoutes from './routes/blog.routes.js';
 app.use("/api/v1/blogs", blogRoutes);
 
 import likeRoutes from './routes/like.routes.js';
-app.use("/api/v1/likes", likeRoutes)
+app.use("/api/v1/likes", likeRoutes);
+
+import notificationRoutes from './routes/notification.routes.js';
+app.use("api/v1/notifications", notificationRoutes);
 
 app.use(errorHandler);
 
