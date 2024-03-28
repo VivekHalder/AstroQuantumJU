@@ -82,4 +82,58 @@ const createNotification = asyncHandler(async (req, res, next) => {
     }
 });
 
-export { createNotification, getNotifications };
+const viewNotifications = asyncHandler(async (req, res, next) => {
+    console.log("Viewing the notification...");
+    const { notificationId } = req.body;
+
+    try {
+        if(!notificationId){
+            throw new ApiError(
+                400,
+                "Notification ID is required to view the notification."
+            )
+        }
+
+        const notification = await Notification.findOne( { _id: notificationId, user: req.user.id } );
+
+        if(!notification){
+            throw new ApiError(
+              404,
+              "No notification found."  
+            )
+        }
+    
+        const updatedNotification = await Notification.findByIdAndUpdate(
+            notificationId,
+            {
+                read: true,
+            },
+            {
+                new: true
+            }
+        );
+    
+        if(!updatedNotification){
+            throw new ApiError(
+                500,
+                "Could not mark the notification as seen."
+            )
+        }
+    
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    updatedNotification,
+                    "The notification was marked as seen successfully."
+                )
+            )
+    } catch (error) {
+        console.log(`Error occured while marking the notification as seen. Error: ${error.message}.`);
+        next(error);
+    }
+
+});
+
+export { createNotification, getNotifications, viewNotifications };

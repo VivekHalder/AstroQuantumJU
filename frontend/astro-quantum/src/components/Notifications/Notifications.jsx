@@ -3,10 +3,39 @@ import axios from 'axios'; // For making API requests
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
+  const unseenNotifications = notifications.filter(notification => !notification.read);
+  const seenNotifications = notifications.filter(notification => notification.read);
+
 
   useEffect(() => {
     fetchNotifications();
   }, []);
+
+  useEffect(() => {
+    const handleUnseenNotifications = async () => {
+        try {
+            await Promise.all(
+                unseenNotifications.map(async (notification) => {
+                    await axios.patch(
+                        import.meta.env.VITE_APP_BACKEND_API_VIEW_NOTIFICATIONS,
+                        {
+                            notificationId: notification._id
+                        },
+                        {
+                            withCredentials: true
+                        }
+                    )
+                })
+            );
+        } catch (error) {
+            console.log(`Error marking notifications as seen. Error: ${error.message}.`)
+        }
+    };
+
+    return () => {
+        handleUnseenNotifications();
+    };
+  }, [unseenNotifications]);
 
   const fetchNotifications = async () => {
     try {
@@ -18,8 +47,6 @@ function Notifications() {
     }
   };
 
-  const unseenNotification = notifications.filter(notification => !notification.read);
-  const seenNotification = notifications.filter(notification => notification.read);
 
   return (
     <div className="bg-black h-full text-white">
@@ -31,14 +58,14 @@ function Notifications() {
           <>
             <div>
                 {
-                    unseenNotification && unseenNotification.length > 0 &&
+                    unseenNotifications && unseenNotifications.length > 0 &&
                     <>
                         <div className='text-3xl font-semibold mb-4'>
                             Unseen Notifications
                         </div>
                         <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
                             {
-                                unseenNotification.map(notification => (
+                                unseenNotifications.map(notification => (
                                     <div key={notification._id} className="p-4 border border-white rounded-md">
                                         <h2 className='text-lg font-semibold mb-2'>
                                             {
@@ -59,7 +86,7 @@ function Notifications() {
             </div>
             <div>
                 {
-                    seenNotification && seenNotification.length > 0 &&
+                    seenNotifications && seenNotifications.length > 0 &&
                     (
                         <>
                             <div className='text-3xl font-semibold mb-4'>
@@ -67,7 +94,7 @@ function Notifications() {
                             </div>
                             <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
                                 {
-                                    seenNotification.map(notification => (
+                                    seenNotifications.map(notification => (
                                         <div key={notification._id} className="p-4 border border-white rounded-md">
                                             <h2 className='text-lg font-semibold mb-2'>
                                                 {
