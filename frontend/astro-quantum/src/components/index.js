@@ -11,5 +11,6 @@ import Blogs from "./Blogs/Blogs";
 import CreateNewBlog from "./Blogs/Create New Blog/CreateNewBlog";
 import PreviewBlog from "./Blogs/PreviewBlog";
 import MakeAdmin from "./Make Admin/MakeAdmin";
+import Notifications from "./Notifications/Notifications";
 
-export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin };
+export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin, Notifications };

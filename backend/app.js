@@ -25,7 +25,7 @@ import likeRoutes from './routes/like.routes.js';
 app.use("/api/v1/likes", likeRoutes);
 
 import notificationRoutes from './routes/notification.routes.js';
-app.use("api/v1/notifications", notificationRoutes);
+app.use("/api/v1/notifications", notificationRoutes);
 
 app.use(errorHandler);
 

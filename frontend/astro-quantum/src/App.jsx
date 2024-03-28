@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin } from './components/index';
+import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin,
+Notifications } from './components/index';
 import { UserProvider } from './contexts/UserContext';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/make-admin',
         element: <MakeAdmin/>
+      },
+      {
+        path: '/notifications',
+        element: <Notifications/>
       }
     ],
   },

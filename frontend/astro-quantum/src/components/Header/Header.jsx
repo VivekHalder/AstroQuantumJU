@@ -127,6 +127,18 @@ function Header() {
                   </NavLink>
                 </li>
               }
+              { localStorage.getItem('user') &&
+                <li>
+                  <NavLink
+                  to="/notifications"
+                  className={({isActive}) =>
+                      `text-xl block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-orange-700" : "text-white"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    }
+                  >
+                    Notifications
+                  </NavLink>
+                </li>
+              }
             </ul>
           </div>
         </div>

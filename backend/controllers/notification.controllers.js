@@ -5,9 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getNotifications = asyncHandler(async (req, res, next) => {
-    console.log("Called");
     const { id } = req.user;
-    console.log(id);
 
     try {
         if (!id) {
@@ -47,15 +45,15 @@ const createNotification = asyncHandler(async (req, res, next) => {
             );
         }
 
-        if (!id) {
+        if (!user) {
             throw new ApiError(
                 400,
-                "User has to send a notification."
+                "User i required to send a notification."
             );
         }
 
         const newNotification = await Notification.create({
-            user: id,
+            user,
             message,
         });
 
@@ -68,7 +66,7 @@ const createNotification = asyncHandler(async (req, res, next) => {
 
         const userNotifications = await Notification.find({ user: id }).sort({ createdAt: -1 });
         if (userNotifications.length > MAX_NOTFICATIONS) {
-            await Notification.deleteMany({ user: id, _id: { $nin: userNotifications.slice(0, MAX_NOTFICATIONS).map(n => n._id) } });
+            await Notification.deleteMany({ user, _id: { $nin: userNotifications.slice(0, MAX_NOTFICATIONS).map(n => n._id) } });
         }
 
         return res.status(200).json(

@@ -53,7 +53,7 @@ const createPost = asyncHandler( async ( req, res, next ) => {
         const notificationPromises = usersToNotify.map(async (user) => {
             await Notification.create({
                 user,
-                message: `${req.user.name} posted ${title}.`
+                message: `${req.user.name} posted "${title}".`
             });
         })
 
