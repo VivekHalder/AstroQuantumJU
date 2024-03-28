@@ -1,3 +1,4 @@
+import { Notification } from "../models/notification.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -415,6 +416,28 @@ const makeAdmin = asyncHandler( async(req, res, next) => {
 
             console.log(updatedUser);
     
+            const adminUsers = await User.find({ role: "admin"});
+
+            const notificationPromises = adminUsers.map(async (admin) => {
+                if(admin._id === selectedUserId){
+                    await Notification.create(
+                        {
+                            user: admin._id,
+                            message: `Congratulations! You have been promoted to an admin by ${req.user.name}.`
+                        }
+                    )
+                } else{
+                    await Notification.create(
+                        {
+                            user: admin._id,
+                            message: `User ${user.name} has been promoted to an admin by ${req.user.name}.`
+                        }
+                    )
+                }
+            });
+
+            const notifications = await Promise.all( notificationPromises );
+
             return res
             .status(200)
             .json(
