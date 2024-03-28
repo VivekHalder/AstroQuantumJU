@@ -5,7 +5,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getNotifications = asyncHandler(async (req, res, next) => {
+    console.log("Called");
     const { id } = req.user;
+    console.log(id);
 
     try {
         if (!id) {
@@ -35,8 +37,7 @@ const getNotifications = asyncHandler(async (req, res, next) => {
 });
 
 const createNotification = asyncHandler(async (req, res, next) => {
-    const { message } = req.body;
-    const { id } = req.user;
+    const { message, user } = req.body;
 
     try {
         if (!message) {

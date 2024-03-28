@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Blog } from './../models/blog.model.js';
+import { User } from "../models/user.model.js";
+import { Notification } from "../models/notification.model.js";
 
 const createPost = asyncHandler( async ( req, res, next ) => {
     try {
@@ -46,6 +48,16 @@ const createPost = asyncHandler( async ( req, res, next ) => {
                 "Could not post the blog"
             );
         }
+
+        const usersToNotify = await User.find({ _id: { $ne: owner } });
+        const notificationPromises = usersToNotify.map(async (user) => {
+            await Notification.create({
+                user,
+                message: `${req.user.name} posted ${title}.`
+            });
+        })
+
+        await Promise.all(notificationPromises);
     
         return res
         .status(200)

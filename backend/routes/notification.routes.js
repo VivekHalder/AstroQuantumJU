@@ -4,7 +4,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route(verifyJWT, getNotifications).get('/get-notifications');
-router.route(createNotification).post('/create-notification');
+router.route('/get-notifications').get(verifyJWT, getNotifications);
+router.route('/create-notification').post(createNotification);
 
 export default router;
