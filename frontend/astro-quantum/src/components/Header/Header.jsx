@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 function Header() {
   const navigate = useNavigate();
 
-  const { actualUserData, setActualUserData,isUserPresent } = useUserContext();
+  const { actualUserData } = useUserContext();
 
   async function logoutUser(){
     
@@ -17,10 +17,7 @@ function Header() {
   
       if( logoutResponse ){
         console.log("User logged-out successfully.");
-        localStorage.removeItem( 'user' );
-        setActualUserData({});
         navigate('/login');
-        localStorage.removeItem('user');
         toast.success('Logged-out successfully.');
       } else{
         console.log("Error occurred");
@@ -41,7 +38,7 @@ function Header() {
             alt="logo" />
           </Link>
           <div className="flex items-center lg:order-2">
-            { localStorage.getItem('user') ? 
+            { actualUserData ? 
               <>
                 <Link
                   to="#"
@@ -63,7 +60,7 @@ function Header() {
                 <Link
                 to="/login"
                 className="text-xl text-white hover:bg-gray-50 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none lg:order-2"
-                onClick={logoutUser}
+                onClick={() => navigate('/login')}
                 >
                   Login
                 </Link>
@@ -115,7 +112,7 @@ function Header() {
                   Blogs
                 </NavLink>
               </li>
-              { localStorage.getItem('user') && (Object.keys(JSON.parse(localStorage.getItem('user')) || '{}')).length > 0 && JSON.parse(localStorage.getItem('user')).role === "admin" &&
+              { actualUserData?.role === "admin" &&
                 <li>
                   <NavLink
                   to="/make-admin"
@@ -127,7 +124,7 @@ function Header() {
                   </NavLink>
                 </li>
               }
-              { localStorage.getItem('user') &&
+              { actualUserData &&
                 <li>
                   <NavLink
                   to="/notifications"

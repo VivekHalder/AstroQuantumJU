@@ -7,6 +7,7 @@ import axios from 'axios';
 import PreviewBlog from './PreviewBlog';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../contexts/UserContext';
+import loader from '../../assets/Dual Ball@1x-1.0s-200px-200px.gif';
 
 function Blogs() {
 
@@ -73,14 +74,15 @@ function Blogs() {
             </>
         ) : (
               <div className='w-full h-screen flex'>
-                <p className='mx-auto my-auto text-9xl'>
-                  No posts found...
-                </p>
+                <img
+                  src={ loader }
+                  className='mx-auto h-[20%]'
+                />
               </div>
           )
         }
       </>
-      { !preview && JSON.parse(localStorage.getItem('user')).role === "admin" &&
+      { !preview && actualUserData?.role === "admin" &&
         <div 
           className='flex justify-end sticky w-full bottom-2'
         >

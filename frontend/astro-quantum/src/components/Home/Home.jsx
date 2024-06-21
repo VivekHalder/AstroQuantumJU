@@ -8,7 +8,7 @@ import { useUserContext } from '../../contexts/UserContext';
 
 function Home() {
 
-  const { setActualUserData, isUserPresent, setIsUserPresent } = useUserContext();
+  const { actualUserData } = useUserContext();
 
   const desc = [
     {
@@ -53,18 +53,12 @@ function Home() {
   ];
 
   const navigate = useNavigate();
+  
   const checkLogin = async () => { 
     try {
-      const res = await axios.get( import.meta.env.VITE_APP_BACKEND_API_GET_CURRENT_USER_END_POINT, { withCredentials: true } );
-      //console.log(res.status);
-      if(res.status === 200){
-        console.log(res.data.data);
-        setActualUserData(res.data.data);
-        setIsUserPresent(true);
+      if(actualUserData){
         navigate('/');
       } else{
-        console.log("COOKIE NO FOUND.")
-        setIsUserPresent(false);
         navigate('/login');
       }
     } catch (error) {
@@ -72,16 +66,9 @@ function Home() {
     }
   };
 
-
   useEffect( () => {
     checkLogin();
-
-    if(isUserPresent === false){
-      navigate('/login');
-    }
-
-  }, [isUserPresent] );
-
+  }, [] );
   
   return (
     <div className='bg-black text-white min-h-screen py-10'>

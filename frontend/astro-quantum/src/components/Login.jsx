@@ -12,8 +12,6 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const { actualUserData, setActualUserData } = useUserContext();
-
     const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
     const imgContainerStyle = {
@@ -58,14 +56,7 @@ function Login() {
 
             const response = await axios.post(import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, phone: userData.phone, password: userData.password }, { withCredentials: true });
 
-            console.log(response);
-
-            if(!response){
-                console.error("There was an error logging in the user.");
-            }
-
             if(response && response?.data){
-                setActualUserData(Object.assign({}, response.data.data.user));
                 navigate('/');
                 setUserData({
                     email: "",

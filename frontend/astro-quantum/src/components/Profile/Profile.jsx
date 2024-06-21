@@ -3,15 +3,9 @@ import PasswordCard from '../Card/PasswordCard';
 import { useUserContext } from '../../contexts/UserContext';
 
 function Profile() {
-    const { actualUserData ,setActualUserData } = useUserContext();
+    const { actualUserData } = useUserContext();
 
-    const [ user, setUser ] = useState({});
-
-    useEffect(() => {
-      const storedUser = localStorage.getItem('user');
-      setUser(JSON.parse(storedUser));
-      setActualUserData(JSON.parse(storedUser))
-    }, []);
+    const [ user, setUser ] = useState( {...actualUserData} );
 
     const userDetails = Object.entries( user );
 
