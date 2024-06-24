@@ -51,24 +51,6 @@ function Home() {
       answer: "The club is open to students from all disciplines! While astrophysics majors may find the discussions aligned with their academic interests, we welcome diverse perspectives. Interdisciplinary collaboration is encouraged, as astrophysics encompasses aspects of physics, mathematics, computer science, and more. Join us to explore the cosmic wonders regardless of your major!"
     }
   ];
-
-  const navigate = useNavigate();
-  
-  const checkLogin = async () => { 
-    try {
-      if(actualUserData){
-        navigate('/');
-      } else{
-        navigate('/login');
-      }
-    } catch (error) {
-      navigate('/login');
-    }
-  };
-
-  useEffect( () => {
-    checkLogin();
-  }, [] );
   
   return (
     <div className='bg-black text-white min-h-screen py-10'>

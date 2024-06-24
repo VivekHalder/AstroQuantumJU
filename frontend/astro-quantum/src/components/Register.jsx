@@ -8,8 +8,6 @@ import { useUserContext } from '../contexts/UserContext';
 
 function Register() {
 
-    const { userData, setUserData, setActualUserData } = useUserContext();
-
     const navigate = useNavigate();
 
     const list = [
@@ -117,8 +115,6 @@ function Register() {
                         const directLogin = await axios.post( import.meta.env.VITE_APP_BACKEND_API_LOGIN_END_POINT, { email: userData.email, password: userData.password }, { withCredentials: true } );
                         
                         console.log(response.data.data.user);
-
-                        setActualUserData(Object.assign({}, response.data.data.user));
                         if( directLogin ){
                             navigate('/');
                         }

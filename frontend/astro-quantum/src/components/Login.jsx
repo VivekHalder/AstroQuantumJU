@@ -127,6 +127,12 @@ function Login() {
         //console.log(userData);
     };
 
+    const handleKeyDown = (event) => {
+        if( event.key === 'Enter' ) {
+            handleLogin();
+        }
+    }
+
   return (
     <div style={bodyStyle}>
         <div style={imgContainerStyle}>
@@ -145,7 +151,7 @@ function Login() {
                     Glad to see you back!
                 </h2>
 
-                <div className='mt-10 flex flex-col'>
+                <div className='mt-10 flex flex-col' onKeyDown={ handleKeyDown }>
                     <input 
                         type="text"
                         name="phone or email"

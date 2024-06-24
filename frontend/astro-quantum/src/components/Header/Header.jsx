@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUserContext } from '../../contexts/UserContext';
@@ -26,6 +26,8 @@ function Header() {
       console.log("Error occurred. Error ", error?.message);
     }
   }
+
+  useEffect( ( ) => console.log( actualUserData ), [ actualUserData ] )
 
   return (
     <header className='shadow sticky z-50 top-0'>
