@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Register, Login, Layout, Home, Contact, About, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin,
-Notifications } from './components/index';
+Notifications, 
+ProtectedRoutes} from './components/index';
 import { UserProvider } from './contexts/UserContext';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <Profile/>
+        element: <ProtectedRoutes> <Profile/> </ProtectedRoutes>
       },
       {
         path: '/blogs',

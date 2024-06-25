@@ -11,10 +11,10 @@ const useFetchUser = () => {
         setLoading( true );
 
         const res = await axios.get(`${ import.meta.env.VITE_APP_BACKEND_API_GET_CURRENT_USER_END_POINT }`, { withCredentials: true });
-        console.log(res)
-        
-        setLoading( false );
+        console.log(res);
+
         setActualUser( res.data.data );
+        setLoading( false );
 
     } catch( error ){
         setLoading( false );

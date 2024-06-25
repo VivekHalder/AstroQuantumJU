@@ -12,5 +12,6 @@ import CreateNewBlog from "./Blogs/Create New Blog/CreateNewBlog";
 import PreviewBlog from "./Blogs/PreviewBlog";
 import MakeAdmin from "./Make Admin/MakeAdmin";
 import Notifications from "./Notifications/Notifications";
+import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
 
-export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin, Notifications };
+export { Login, Register, Home, Header, Footer, Contact, About, Layout, Profile, Blogs, CreateNewBlog, PreviewBlog, MakeAdmin, Notifications, ProtectedRoutes };

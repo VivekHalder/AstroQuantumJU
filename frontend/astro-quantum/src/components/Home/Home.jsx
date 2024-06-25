@@ -8,8 +8,6 @@ import { useUserContext } from '../../contexts/UserContext';
 
 function Home() {
 
-  const { actualUserData } = useUserContext();
-
   const desc = [
     {
       title: "Foster a Passion for Astrophysics",
