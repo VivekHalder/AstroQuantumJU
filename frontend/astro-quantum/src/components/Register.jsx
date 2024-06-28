@@ -10,6 +10,8 @@ function Register() {
 
     const navigate = useNavigate();
 
+    const { setActualUserData } = useUserContext();
+
     const list = [
         {
             name: "Name",
@@ -116,6 +118,7 @@ function Register() {
                         
                         console.log(response.data.data.user);
                         if( directLogin ){
+                            setActualUserData( response.data.data.user );
                             navigate('/');
                         }
                     } catch (error) {

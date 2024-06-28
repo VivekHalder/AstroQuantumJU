@@ -14,6 +14,8 @@ function Login() {
 
     const [ isLoggingIn, setIsLoggingIn ] = React.useState(false);
 
+    const { setActualUserData } = useUserContext();
+
     const imgContainerStyle = {
         position: "relative",
         width: "100%",
@@ -65,6 +67,8 @@ function Login() {
                     "phone or email": ""
                 });
                 toast.success('Login successful');
+                console.log( response.data.data.user );
+                setActualUserData( response.data.data.user );
             }
 
         } catch (error) {

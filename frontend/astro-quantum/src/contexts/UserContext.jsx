@@ -9,7 +9,7 @@ export const UserProvider = ({children}) => {
     const [ actualUserData, setActualUserData, loading, setLoading ] = useFetchUser();
 
     return (
-        <UserContext.Provider value={{ actualUserData, loading }}>
+        <UserContext.Provider value={{ actualUserData, setActualUserData, loading }}>
             {children}
         </UserContext.Provider>
     );

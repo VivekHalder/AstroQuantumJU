@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 function Header() {
   const navigate = useNavigate();
 
-  const { actualUserData } = useUserContext();
+  const { actualUserData, setActualUserData } = useUserContext();
 
   async function logoutUser(){
     
@@ -19,6 +19,7 @@ function Header() {
         console.log("User logged-out successfully.");
         navigate('/login');
         toast.success('Logged-out successfully.');
+        setActualUserData( {} );
       } else{
         console.log("Error occurred");
       }
